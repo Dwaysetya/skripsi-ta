@@ -118,7 +118,7 @@ function Stopword() {
   }));
 
   return (
-    <Layout style={{ marginLeft: "17%", marginTop: "5%" }}>
+    <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
       {modalContent === "TambahData" && (
         <TambahData open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
           <Form.Item

@@ -177,7 +177,7 @@ function Slangword() {
   ];
 
   return (
-    <Layout style={{ marginLeft: "17%", marginTop: "5%" }}>
+    <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
       <Modal
         title="Edit Data"
         open={isModalEdit}
@@ -260,7 +260,7 @@ function Slangword() {
           }}
         >
           <Search
-            style={{ width: "300px" }}
+            style={{ width: "400px" }}
             placeholder="Search by buku or slang"
             onSearch={handleSearch}
             enterButton
