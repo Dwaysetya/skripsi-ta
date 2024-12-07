@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Dashboard from "../../Pages/Content/Dashboard";
 import Slangword from "../../Pages/Content/KamusKata/Slangword";
 import Stopword from "../../Pages/Content/KamusKata/Stopword";
+import Dataset from "../../Pages/Content/Dataset";
 
 const Content = () => {
   return (
@@ -14,10 +15,8 @@ const Content = () => {
         {/* About Routes */}
         <Route path="/kamuskata/slangword" element={<Slangword />} />
         <Route path="/kamuskata/stopword" element={<Stopword />} />
-        <Route path="/about/mission" element={<h2>Our Mission</h2>} />
-
         {/* Other Routes */}
-        <Route path="/services" element={<h2>Our Services</h2>} />
+        <Route path="/dataset" element={<Dataset />} />
         <Route path="/contact" element={<h2>Contact Us</h2>} />
       </Routes>
     </div>

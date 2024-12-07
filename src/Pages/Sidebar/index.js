@@ -59,7 +59,7 @@ const SidebarComponent = () => {
           </Menu.Item>
         </SubMenu>
         <Menu.Item key="3" icon={<DatabaseOutlined />}>
-          <Link to="/services">Dataset</Link>
+          <Link to="/dataset">Dataset</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<LoadingOutlined />}>
           <Link to="/contact">Preprocessing</Link>

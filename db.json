@@ -12,7 +12,7 @@
     },
     {
       "katabuku": "bhimas2",
-      "kataslang": "test11",
+      "kataslang": "test11lkmmppp",
       "id": "3"
     },
     {
@@ -81,14 +81,14 @@
       "kataslang": "test2"
     },
     {
-      "id": 17,
-      "katabuku": "ada",
-      "kataslang": "apaan"
+      "katabuku": "aaaa",
+      "kataslang": "aada",
+      "id": "id17"
     },
     {
-      "id": 18,
-      "katabuku": "aaa",
-      "kataslang": "aa"
+      "katabuku": "abaa",
+      "kataslang": "acapp",
+      "id": "id18"
     }
   ],
   "stopword": [
@@ -135,6 +135,14 @@
     {
       "id": 11,
       "createdat": "ada"
+    }
+  ],
+  "dataset": [
+    {
+      "id": "1",
+      "createdat": "2023-10-27 03:54:39",
+      "ulasan": "banyak bug nya",
+      "username": "ihsan nugraha"
     }
   ]
 }

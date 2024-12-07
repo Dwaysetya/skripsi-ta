@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Layout, Table, theme, Input, Form, message, Modal } from "antd";
 import TambahData from "../../../Components/Fragments/TambahData";
 import ImportData from "../../../Components/Fragments/ImportData";
-import DataEdit from "../../../Components/Fragments/DataEdit";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
 import axios, { Axios } from "axios";
@@ -60,8 +59,10 @@ function Slangword() {
     }
 
     try {
+      const newId = `id${Dummy.length + 1}`;
+
       const response = await axios.post("http://localhost:3002/kataslang", {
-        id: Dummy.length + 1,
+        id: newId,
         katabuku: kataBuku,
         kataslang: kataSlang,
       });
@@ -98,8 +99,8 @@ function Slangword() {
         })
         .then((res) => {
           message.success("Data Berhasil di Tambah");
-          setIsModalEdit(false);
           GetdataUsers();
+          setIsModalEdit(false);
         })
         .catch((err) => console.log(err));
       return;
