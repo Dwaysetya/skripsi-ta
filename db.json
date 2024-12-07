@@ -272,5 +272,56 @@
       "ulasan": "banyak bug nya",
       "username": "ihsan nugraha"
     }
+  ],
+  "labeling": [
+    {
+      "id": "1",
+      "createdat": "2023-10-27 03:54:39",
+      "username": "ihsan nugraha",
+      "ulasan": "banyak bug nya",
+      "label": "positif"
+    },
+    {
+      "id": "2",
+      "createdat": "2023-10-27 03:54:39",
+      "username": "ihsan nugraha",
+      "ulasan": "banyak bug nya",
+      "label": "positif"
+    },
+    {
+      "id": "3",
+      "createdat": "2023-10-27 03:54:39",
+      "username": "ihsan nugraha",
+      "ulasan": "banyak bug nya",
+      "label": "negatif"
+    },
+    {
+      "id": "4",
+      "createdat": "2023-10-27 03:54:39",
+      "username": "ihsan nugraha",
+      "ulasan": "banyak bug nya",
+      "label": "positif"
+    },
+    {
+      "id": "5",
+      "createdat": "2023-10-27 03:54:39",
+      "username": "ihsan nugraha",
+      "ulasan": "banyak bug nya",
+      "label": "positif"
+    },
+    {
+      "id": "6",
+      "createdat": "2023-10-27 03:54:39",
+      "username": "ihsan nugraha",
+      "ulasan": "banyak bug nya",
+      "label": "negatif"
+    },
+    {
+      "id": "7",
+      "createdat": "2023-10-27 03:54:39",
+      "username": "ihsan nugraha",
+      "ulasan": "banyak bug nya",
+      "label": "positif"
+    }
   ]
 }
