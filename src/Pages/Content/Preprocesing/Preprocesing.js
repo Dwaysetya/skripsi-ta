@@ -17,9 +17,9 @@ function Preprocessing() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://localhost:3002/dataset/")
+      .get("http://localhost:3002/preprocesing/")
       .then((res) => {
-        console.log("Data dari server:", res.data); // Tampilkan data
+        console.log("Data dari server:", res.data);
         const dataUpdate = res.data.sort((a, b) =>
           a.createdat.localeCompare(b.createdat)
         );
