@@ -26,11 +26,11 @@ function Dataset() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://localhost:3002/kataslang/")
+      .get("http://localhost:3002/dataset/")
       .then((res) => {
         console.log("Data dari server:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) =>
-          a.katabuku.localeCompare(b.katabuku)
+          a.createdat.localeCompare(b.createdat)
         );
         console.log("Data yang diurutkan:", dataUpdate);
         setDummy(dataUpdate);
@@ -53,8 +53,9 @@ function Dataset() {
       // If there is a search value, filter the data
       const filteredData = Dummy.filter(
         (item) =>
-          item.katabuku.toLowerCase().includes(value.toLowerCase()) ||
-          item.kataslang.toLowerCase().includes(value.toLowerCase())
+          item.createdat.toLowerCase().includes(value.toLowerCase()) ||
+          item.ulasan.toLowerCase().includes(value.toLowerCase()) ||
+          item.username.toLowerCase().includes(value.toLowerCase())
       );
       setDummy(filteredData);
     }
@@ -67,7 +68,7 @@ function Dataset() {
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     { title: "Created At", dataIndex: "createdat", key: "createdat" },
-    { title: "Google Play", dataIndex: "googleplay", key: "googleplay" },
+    { title: "Ulasan", dataIndex: "ulasan", key: "ulasan" },
     { title: "User Name", dataIndex: "username", key: "username" },
   ];
   return (
@@ -130,7 +131,16 @@ function Dataset() {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={Dummy} />
+        <Table
+          columns={columns}
+          dataSource={Dummy}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            onChange: (page, pageSize) =>
+              setPagination({ current: page, pageSize }),
+          }}
+        />
       </Content>
     </Layout>
   );
