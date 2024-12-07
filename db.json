@@ -1,84 +1,140 @@
 {
   "kataslang": [
     {
-      "id": 1,
+      "id": "1",
       "katabuku": "dhimas",
       "kataslang": "test"
     },
     {
-      "id": 2,
+      "id": "2",
       "katabuku": "dhimas2",
       "kataslang": "test2"
     },
     {
-      "id": 3,
       "katabuku": "bhimas2",
-      "kataslang": "test2"
+      "kataslang": "test11",
+      "id": "3"
     },
     {
-      "id": 4,
+      "id": "4",
       "katabuku": "bhimas22",
       "kataslang": "test2"
     },
     {
-      "id": 5,
+      "id": "5",
       "katabuku": "bhimas223",
       "kataslang": "test2"
     },
     {
-      "id": 6,
+      "id": "6",
       "katabuku": "bhimas221",
       "kataslang": "test2"
     },
     {
-      "id": 7,
+      "id": "7",
       "katabuku": "bhimas220",
       "kataslang": "test2"
     },
     {
-      "id": 8,
+      "id": "8",
       "katabuku": "bhimas2202",
       "kataslang": "test2"
+    },
+    {
+      "id": "9",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": "10",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": "11",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": "12",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": "13",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": "14",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": "15",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": "16",
+      "katabuku": "bhimas2202",
+      "kataslang": "test2"
+    },
+    {
+      "id": 17,
+      "katabuku": "ada",
+      "kataslang": "apaan"
+    },
+    {
+      "id": 18,
+      "katabuku": "aaa",
+      "kataslang": "aa"
+    }
+  ],
+  "stopword": [
+    {
+      "createdat": "hah",
+      "id": "4"
+    },
+    {
+      "id": "5",
+      "createdat": "isi"
+    },
+    {
+      "id": 3,
+      "createdat": "adalah"
+    },
+    {
+      "id": 4,
+      "createdat": "apaan"
+    },
+    {
+      "id": 5,
+      "createdat": "asaaa"
+    },
+    {
+      "id": 6,
+      "createdat": "1"
+    },
+    {
+      "id": 7,
+      "createdat": "111"
+    },
+    {
+      "id": 8,
+      "createdat": "111111"
     },
     {
       "id": 9,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
+      "createdat": "111111111"
     },
     {
       "id": 10,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
+      "createdat": "111111111111"
     },
     {
       "id": 11,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
-    },
-    {
-      "id": 12,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
-    },
-    {
-      "id": 13,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
-    },
-    {
-      "id": 14,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
-    },
-    {
-      "id": 15,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
-    },
-    {
-      "id": 16,
-      "katabuku": "bhimas2202",
-      "kataslang": "test2"
+      "createdat": "ada"
     }
   ]
 }

@@ -112,12 +112,19 @@ function Slangword() {
   const handleCancel = () => setIsModalOpen(false);
 
   const handleSearch = (value) => {
-    const filteredData = Dummy.filter(
-      (item) =>
-        item.katabuku.toLowerCase().includes(value.toLowerCase()) ||
-        item.kataslang.toLowerCase().includes(value.toLowerCase())
-    );
-    setDummy(filteredData);
+    // If no search value, reset the data to the full list by calling GetdataUsers
+    if (value.trim() === "") {
+      console.log("Resetting to full data...");
+      GetdataUsers(); // Reset to the original full dataset
+    } else {
+      // If there is a search value, filter the data
+      const filteredData = Dummy.filter(
+        (item) =>
+          item.katabuku.toLowerCase().includes(value.toLowerCase()) ||
+          item.kataslang.toLowerCase().includes(value.toLowerCase())
+      );
+      setDummy(filteredData);
+    }
   };
 
   const handleDelete = (record) => {
