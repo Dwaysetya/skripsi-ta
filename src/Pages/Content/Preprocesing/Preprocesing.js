@@ -1,13 +1,54 @@
-import { Input, Layout, Modal, Content } from "antd";
-import React from "react";
+import { Layout, Table, theme } from "antd";
+import React, { useState, useEffect } from "react";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
+import axios from "axios";
 const { Content } = Layout;
 
 function Preprocessing() {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+  const [Dummy, setDummy] = useState("");
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pagination: 10,
+  });
+
+  const GetdataUsers = () => {
+    axios
+      .get("http://localhost:3002/dataset/")
+      .then((res) => {
+        console.log("Data dari server:", res.data); // Tampilkan data
+        const dataUpdate = res.data.sort((a, b) =>
+          a.createdat.localeCompare(b.createdat)
+        );
+        console.log("Data yang diurutkan:", dataUpdate);
+        setDummy(dataUpdate);
+      })
+      .catch((err) => {
+        console.log("Error fetching data:", err);
+      });
+  };
+
+  useEffect(() => {
+    GetdataUsers();
+  }, []);
+
+  const columns = [
+    {
+      title: "No",
+      key: "index",
+      render: (text, record, index) =>
+        (pagination.current - 1) * pagination.pageSize + index + 1,
+    },
+    { title: "Created At", dataIndex: "createdat", key: "createdat" },
+    { title: "Ulasan", dataIndex: "ulasan", key: "ulasan" },
+    { title: "User Name", dataIndex: "username", key: "username" },
+  ];
+
   return (
     <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
-      <ImportData open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
       <Label
         htmlFor="Preprocesing"
         text="Preprocesing"
@@ -15,7 +56,7 @@ function Preprocessing() {
           fontWeight: "bold",
           color: "black",
           fontSize: "20px",
-          margin: "20px",
+          margin: "10px",
         }}
       />
       <div
@@ -25,7 +66,7 @@ function Preprocessing() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "10px 15px",
+          padding: "5px 15px",
         }}
       >
         <div
@@ -35,14 +76,7 @@ function Preprocessing() {
             justifyContent: "flex-start",
             marginRight: "40%",
           }}
-        >
-          <Search
-            style={{ width: "300px" }}
-            placeholder="Search by Dataset"
-            onSearch={handleSearch}
-            enterButton
-          />
-        </div>
+        ></div>
         <div
           style={{
             flexGrow: 0,
@@ -51,9 +85,7 @@ function Preprocessing() {
             gap: "10px",
           }}
         >
-          <IndexButton type="primary" onClick={() => setIsModalOpen(true)}>
-            Preprocesing
-          </IndexButton>
+          <IndexButton type="primary">Preprocesing</IndexButton>
         </div>
       </div>
       <Content
