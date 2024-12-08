@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
 import axios from "axios";
+import Foter from "../../Footer";
 const { Content } = Layout;
 
 function Preprocessing() {
@@ -12,7 +13,7 @@ function Preprocessing() {
   const [Dummy, setDummy] = useState("");
   const [pagination, setPagination] = useState({
     current: 1,
-    pagination: 10,
+    pageSize: 10,
   });
 
   const GetdataUsers = () => {
@@ -108,6 +109,7 @@ function Preprocessing() {
           }}
         />
       </Content>
+      <Foter />
     </Layout>
   );
 }

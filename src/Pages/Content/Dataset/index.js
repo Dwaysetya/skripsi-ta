@@ -4,6 +4,7 @@ import Label from "../../../Components/Elements/Label";
 import IndexButton from "../../../Components/Elements/Button";
 import axios from "axios";
 import ImportData from "../../../Components/Fragments/ImportData";
+import Foter from "../../Footer";
 const { Content } = Layout;
 const { Search } = Input;
 
@@ -142,6 +143,7 @@ function Dataset() {
           }}
         />
       </Content>
+      <Foter />
     </Layout>
   );
 }
