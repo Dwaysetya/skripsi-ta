@@ -211,7 +211,10 @@ function Stopword() {
       {modalContent === "ImportData" && (
         <ImportData
           open={isModalOpen}
-          onOk={() => setIsModalOpen(false)}
+          onOk={() => {
+            setIsModalOpen(false);
+            GetdataUsers();
+          }}
           onCancel={handleCancel}
         />
       )}
