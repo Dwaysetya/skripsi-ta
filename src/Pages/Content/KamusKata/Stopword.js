@@ -18,7 +18,7 @@ function Stopword() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("TambahData");
   const [isModalEdit, setIsModalEdit] = useState(false);
-  const [CreatedAt, setCreatedAt] = useState("");
+  const [Stopword, setStopword] = useState("");
   const [Dummy, setDummy] = useState("");
   const [recordData, setRecordData] = useState({});
   const [pagination, setPagination] = useState({
@@ -33,11 +33,11 @@ function Stopword() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://localhost:3002/stopword/")
+      .get("http://127.0.0.1:5000/stopword")
       .then((res) => {
         console.log("Data dari server:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) =>
-          a.createdat.localeCompare(b.createdat)
+          a.kata_stop.localeCompare(b.kata_stop)
         );
         console.log("Data yang diurutkan:", dataUpdate);
         setDummy(dataUpdate);
@@ -52,16 +52,16 @@ function Stopword() {
   }, []);
 
   const handleOk = async () => {
-    if (!CreatedAt) {
+    if (!Stopword) {
       alert("Harap tambahkan data!");
       return; // Hentikan eksekusi jika input kosong
     }
 
     try {
       const newId = `id${Dummy.length + 1}`;
-      const response = await axios.post("http://localhost:3002/stopword", {
+      const response = await axios.post("http://127.0.0.1:5000/stopword", {
         id: newId,
-        createdat: CreatedAt,
+        kata_stop: Stopword,
       });
       console.log("Data berhasil dikirim:", response.data);
       message.success("Data Berhasil Ditambahkan!");
@@ -75,22 +75,22 @@ function Stopword() {
 
   const showModal = (record) => {
     setRecordData(record);
-    setCreatedAt(record.createdat);
+    setStopword(record.kata_stop);
     setIsModalEdit(true);
   };
 
   const handleEdit = async () => {
-    if (!CreatedAt) {
+    if (!Stopword) {
       alert("Harap ubah data");
       return; // Hentikan eksekusi jika input kosong
     }
 
     // console.log("id", id);
-    if (CreatedAt) {
+    if (Stopword) {
       // KETIKA KLIK YES AKAN MASUK KE FUNCTION INI
       axios
-        .put(`http://localhost:3002/stopword/${recordData.id}`, {
-          createdat: CreatedAt,
+        .put(`http://127.0.0.1:5000/stopword/update/${recordData.id}`, {
+          kata_stop: Stopword,
         })
         .then((res) => {
           message.success("Data Berhasil di Tambah");
@@ -115,7 +115,7 @@ function Stopword() {
     } else {
       // If there is a search value, filter the data
       const filteredData = Dummy.filter((item) =>
-        item.createdat.toLowerCase().includes(value.toLowerCase())
+        item.kata_stop.toLowerCase().includes(value.toLowerCase())
       );
       setDummy(filteredData);
     }
@@ -135,7 +135,7 @@ function Stopword() {
       if (result.isConfirmed) {
         // KETIKA KLIK YES AKAN MASUK KE FUNCTION INI
         axios
-          .delete(`http://localhost:3002/stopword/${record.id}`)
+          .delete(`http://127.0.0.1:5000/stopword/delete/${record.id}`)
           .then((res) => {
             // KETIKA SUKSES AKAN GET DATA KEMBALI SUPAYA TERUPDATE
             GetdataUsers();
@@ -156,7 +156,7 @@ function Stopword() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Created At", dataIndex: "createdat", key: "createdat" },
+    { title: "Kata Stop", dataIndex: "kata_stop", key: "kata_stop" },
     {
       title: "Action",
       key: "action",
@@ -189,10 +189,10 @@ function Stopword() {
         <Form.Item name="createdat" label="Created At">
           <Input
             type="text"
-            value={CreatedAt}
-            defaultValue={CreatedAt}
+            value={Stopword}
+            defaultValue={Stopword}
             key={recordData.id}
-            onChange={(e) => setCreatedAt(e.target.value)}
+            onChange={(e) => setStopword(e.target.value)}
           />
         </Form.Item>
       </Modal>
@@ -202,8 +202,8 @@ function Stopword() {
           <Form.Item name="createdat" label="Created At">
             <Input
               type="text"
-              value={CreatedAt}
-              onChange={(e) => setCreatedAt(e.target.value)}
+              value={Stopword}
+              onChange={(e) => setStopword(e.target.value)}
             />
           </Form.Item>
         </TambahData>

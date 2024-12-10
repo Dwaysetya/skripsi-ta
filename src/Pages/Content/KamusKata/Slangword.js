@@ -237,7 +237,7 @@ function Slangword() {
       {modalContent === "ImportData" && (
         <ImportData
           open={isModalOpen}
-          onOk={setIsModalOpen(false)}
+          onOk={() => setIsModalOpen(false)}
           onCancel={handleCancel}
         />
       )}
