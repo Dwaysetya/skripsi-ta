@@ -198,7 +198,7 @@ function Slangword() {
         <Form.Item name="kata_baku" label="kata_baku">
           <Input
             type="text"
-            value={recordData.kata_baku}
+            value={kataBaku}
             defaultValue={kataBaku}
             key={recordData.id}
             onChange={(e) => setKataBaku(e.target.value)}

@@ -58,8 +58,9 @@ function Stopword() {
     }
 
     try {
+      const newId = `id${Dummy.length + 1}`;
       const response = await axios.post("http://localhost:3002/stopword", {
-        id: Dummy.length + 1,
+        id: newId,
         createdat: CreatedAt,
       });
       console.log("Data berhasil dikirim:", response.data);
