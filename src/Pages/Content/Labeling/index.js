@@ -13,6 +13,10 @@ const Labeling = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const [Dummy, setDummy] = useState("");
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+  });
 
   const GetdataUsers = () => {
     axios
@@ -45,14 +49,19 @@ const Labeling = () => {
   };
 
   const columns = [
-    { title: "No", key: "index", render: (text, record, index) => index + 1 },
-    { title: "Created At", dataIndex: "Created At", key: "Created At" },
-    { title: "username", dataIndex: "username", key: "username" },
-    { title: "ulasan", dataIndex: "googleplay", key: "googleplay" },
-    { title: "label", dataIndex: "label", key: "label" },
+    {
+      title: "No",
+      key: "index",
+      render: (text, record, index) =>
+        (pagination.current - 1) * pagination.pageSize + index + 1,
+    },
+    { title: "Created At", dataIndex: "createdat", key: "createdat" },
+    { title: "User Name", dataIndex: "username", key: "username" },
+    { title: "Ulasan", dataIndex: "ulasan", key: "ulasan" },
+    { title: "Label", dataIndex: "label", key: "label" },
   ];
   return (
-    <Layout>
+    <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
       <Label
         htmlFor="Labeling"
         text="Labeling"
@@ -113,7 +122,16 @@ const Labeling = () => {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={Dummy} />
+        <Table
+          columns={columns}
+          dataSource={Dummy}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            onChange: (page, pageSize) =>
+              setPagination({ current: page, pageSize }),
+          }}
+        />
       </Content>
       <Foter />
     </Layout>
