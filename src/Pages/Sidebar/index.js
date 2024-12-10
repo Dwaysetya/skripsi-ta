@@ -62,10 +62,10 @@ const SidebarComponent = () => {
           <Link to="/dataset">Dataset</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<LoadingOutlined />}>
-          <Link to="/contact">Preprocessing</Link>
+          <Link to="/preprocessing">Preprocessing</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<TagOutlined />}>
-          <Link to="/contact">Labeling</Link>
+          <Link to="/labeling">Labeling</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<CheckSquareOutlined />}>
           <Link to="/contact">Testing</Link>
