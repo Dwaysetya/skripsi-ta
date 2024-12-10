@@ -28,7 +28,7 @@ const ImportData = ({ onSubmit, open, onOk, onCancel }) => {
 
   const props = {
     name: "file",
-    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+    action: "http://127.0.0.1:5000/slangword/import",
     headers: {
       authorization: "authorization-text",
     },

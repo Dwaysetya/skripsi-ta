@@ -32,6 +32,7 @@ function Slangword() {
     setIsModalOpen(true);
   };
 
+
   const GetdataUsers = () => {
     axios
       .get("http://127.0.0.1:5000/slangword")
@@ -77,10 +78,9 @@ function Slangword() {
   };
 
   const showModal = (record) => {
-    console.log("dway", record.kata_baku);
     setRecordData(record);
-    setKataBaku(record.katabaku);
-    setKataSlang(record.kataslang);
+    setKataBaku(record.kata_baku);
+    setKataSlang(record.kata_slang);
     setIsModalEdit(true);
   };
 
@@ -143,7 +143,7 @@ function Slangword() {
       if (result.isConfirmed) {
         // KETIKA KLIK YES AKAN MASUK KE FUNCTION INI
         axios
-          .delete(`http://localhost:3002/kataslang/${record.id}`)
+          .delete(`http://127.0.0.1:5000/slangword/delete/${record.id}`)
           .then((res) => {
             // KETIKA SUKSES AKAN GET DATA KEMBALI SUPAYA TERUPDATE
             GetdataUsers();
@@ -175,6 +175,7 @@ function Slangword() {
             style={{ marginRight: 16 }}
             onClick={() => {
               showModal(record);
+              console.log(record);
             }}
           >
             Edit
@@ -207,7 +208,7 @@ function Slangword() {
         <Form.Item name="kata_slang" label="kata_slang">
           <Input
             type="text"
-            value={kataBaku}
+            value={kataSlang}
             key={recordData.id}
             defaultValue={kataSlang}
             onChange={(e) => setKataSlang(e.target.value)}
@@ -236,7 +237,7 @@ function Slangword() {
       {modalContent === "ImportData" && (
         <ImportData
           open={isModalOpen}
-          onOk={handleOk}
+          onOk={setIsModalOpen(false)}
           onCancel={handleCancel}
         />
       )}
