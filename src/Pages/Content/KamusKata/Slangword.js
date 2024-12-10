@@ -19,12 +19,12 @@ function Slangword() {
   const [modalContent, setModalContent] = useState("TambahData");
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [kataSlang, setKataSlang] = useState("");
-  const [kataBuku, setKataBuku] = useState("");
+  const [kataBaku, setKataBaku] = useState("");
   const [Dummy, setDummy] = useState("");
   const [recordData, setRecordData] = useState({});
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
   });
 
   const handleButtonClick = (content) => {
@@ -34,11 +34,11 @@ function Slangword() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://localhost:3002/kataslang/")
+      .get("http://127.0.0.1:5000/slangword")
       .then((res) => {
         console.log("Data dari server:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) =>
-          a.katabuku.localeCompare(b.katabuku)
+          a.kata_baku.localeCompare(b.kata_baku)
         );
         console.log("Data yang diurutkan:", dataUpdate);
         setDummy(dataUpdate);
@@ -53,7 +53,7 @@ function Slangword() {
   }, []);
 
   const handleOk = async () => {
-    if (!kataSlang || !kataBuku) {
+    if (!kataSlang || !kataBaku) {
       alert("Harap tambahkan data!");
       return; // Hentikan eksekusi jika input kosong
     }
@@ -61,10 +61,10 @@ function Slangword() {
     try {
       const newId = `id${Dummy.length + 1}`;
 
-      const response = await axios.post("http://localhost:3002/kataslang", {
+      const response = await axios.post("http://127.0.0.1:5000/slangword", {
         id: newId,
-        katabuku: kataBuku,
-        kataslang: kataSlang,
+        kata_baku: kataBaku,
+        kata_slang: kataSlang,
       });
       console.log("Data berhasil dikirim:", response.data);
       message.success("Data Berhasil Ditambahkan!");
@@ -77,25 +77,26 @@ function Slangword() {
   };
 
   const showModal = (record) => {
+    console.log("dway", record.kata_baku);
     setRecordData(record);
-    setKataBuku(record.katabuku);
+    setKataBaku(record.katabaku);
     setKataSlang(record.kataslang);
     setIsModalEdit(true);
   };
 
   const handleEdit = async () => {
-    if (!kataSlang || !kataBuku) {
+    if (!kataSlang || !kataBaku) {
       alert("Harap ubah data");
       return; // Hentikan eksekusi jika input kosong
     }
 
     // console.log("id", id);
-    if (kataBuku || kataSlang) {
+    if (kataBaku || kataSlang) {
       // KETIKA KLIK YES AKAN MASUK KE FUNCTION INI
       axios
-        .put(`http://localhost:3002/kataslang/${recordData.id}`, {
-          katabuku: kataBuku,
-          kataslang: kataSlang,
+        .put(`http://127.0.0.1:5000/slangword/update/${recordData.id}`, {
+          kata_baku: kataBaku,
+          kata_slang: kataSlang,
         })
         .then((res) => {
           message.success("Data Berhasil di Tambah");
@@ -121,7 +122,7 @@ function Slangword() {
       // If there is a search value, filter the data
       const filteredData = Dummy.filter(
         (item) =>
-          item.katabuku.toLowerCase().includes(value.toLowerCase()) ||
+          item.katabaku.toLowerCase().includes(value.toLowerCase()) ||
           item.kataslang.toLowerCase().includes(value.toLowerCase())
       );
       setDummy(filteredData);
@@ -163,8 +164,8 @@ function Slangword() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Kata Buku", dataIndex: "katabuku", key: "katabuku" },
-    { title: "Kata Slang", dataIndex: "kataslang", key: "kataslang" },
+    { title: "Kata Baku", dataIndex: "kata_baku", key: "kata_baku" },
+    { title: "Kata Slang", dataIndex: "kata_slang", key: "kata_slang" },
     {
       title: "Action",
       key: "action",
@@ -194,19 +195,19 @@ function Slangword() {
         }}
         onCancel={handleCancelEdit}
       >
-        <Form.Item name="katabuku" label="kata buku">
+        <Form.Item name="kata_baku" label="kata_baku">
           <Input
             type="text"
-            value={kataBuku}
-            defaultValue={kataBuku}
+            value={recordData.kata_baku}
+            defaultValue={kataBaku}
             key={recordData.id}
-            onChange={(e) => setKataBuku(e.target.value)}
+            onChange={(e) => setKataBaku(e.target.value)}
           />
         </Form.Item>
-        <Form.Item name="kataslang" label="kata slang">
+        <Form.Item name="kata_slang" label="kata_slang">
           <Input
             type="text"
-            value={kataSlang}
+            value={kataBaku}
             key={recordData.id}
             defaultValue={kataSlang}
             onChange={(e) => setKataSlang(e.target.value)}
@@ -216,11 +217,11 @@ function Slangword() {
       {modalContent === "TambahData" && (
         <TambahData open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
           {" "}
-          <Form.Item name="katabuku" label="kata buku">
+          <Form.Item name="katabaku" label="kata baku">
             <Input
               type="text"
-              value={kataBuku}
-              onChange={(e) => setKataBuku(e.target.value)}
+              value={kataBaku}
+              onChange={(e) => setKataBaku(e.target.value)}
             />
           </Form.Item>
           <Form.Item name="kataslang" label="kata slang">
@@ -269,7 +270,7 @@ function Slangword() {
         >
           <Search
             style={{ width: "400px" }}
-            placeholder="Search by buku or slang"
+            placeholder="Search by baku or slang"
             onSearch={handleSearch}
             enterButton
           />

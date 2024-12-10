@@ -64,13 +64,13 @@ const SidebarComponent = () => {
         <Menu.Item key="4" icon={<LoadingOutlined />}>
           <Link to="/preprocessing">Preprocessing</Link>
         </Menu.Item>
-        <Menu.Item key="4" icon={<TagOutlined />}>
+        <Menu.Item key="5" icon={<TagOutlined />}>
           <Link to="/labeling">Labeling</Link>
         </Menu.Item>
-        <Menu.Item key="4" icon={<CheckSquareOutlined />}>
+        <Menu.Item key="6" icon={<CheckSquareOutlined />}>
           <Link to="/contact">Testing</Link>
         </Menu.Item>
-        <Menu.Item key="4" icon={<LogoutOutlined />}>
+        <Menu.Item key="7" icon={<LogoutOutlined />}>
           <Link to="/contact">Log-Out</Link>
         </Menu.Item>
       </Menu>
