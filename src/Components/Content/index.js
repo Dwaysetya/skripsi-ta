@@ -6,12 +6,14 @@ import Stopword from "../../Pages/Content/KamusKata/Stopword";
 import Dataset from "../../Pages/Content/Dataset";
 import Preprocessing from "../../Pages/Content/Preprocesing/Preprocesing";
 import Labeling from "../../Pages/Content/Labeling";
+import SignIn from "../../Pages/Login/Sign-In";
 
 const Content = () => {
   return (
     <div>
       <Routes>
         {/* Main Route */}
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/" element={<Dashboard />} />
 
         {/* About Routes */}
