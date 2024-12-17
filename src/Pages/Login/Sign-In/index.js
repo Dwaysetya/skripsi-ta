@@ -7,84 +7,70 @@ const SignIn = () => {
     console.log("Received values of form: ", values);
   };
   return (
-    <div
-      style={{
-        height: "100vh",
-        width: "100%",
-        display: "flex",
-      }}
-    >
-      <div
-        style={{
-          width: "30%",
-          paddingTop: "20%",
-          background: "#001529",
-        }}
-      >
-        <div style={{}}>
-          <Label
-            htmlFor="Sign-In"
-            text="Sign-In"
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              fontSize: "20px",
-            }}
-          />
-        </div>
-        <div style={{ margin: "5%" }}>
-          <Form
-            name="login"
-            initialValues={{
-              remember: true,
-            }}
-            style={{
-              maxWidth: 360,
-            }}
-            onFinish={onFinish}
+    <div>
+      <div style={{}}>
+        <Label
+          htmlFor="Sign-In"
+          text="Sign-In"
+          style={{
+            fontWeight: "bold",
+            color: "white",
+            fontSize: "20px",
+          }}
+        />
+      </div>
+      <div style={{ margin: "5%" }}>
+        <Form
+          name="login"
+          initialValues={{
+            remember: true,
+          }}
+          style={{
+            maxWidth: 360,
+          }}
+          onFinish={onFinish}
+        >
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username!",
+              },
+            ]}
           >
-            <Form.Item
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Username!",
-                },
-              ]}
-            >
-              <Input prefix={<UserOutlined />} placeholder="Username" />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Password!",
-                },
-              ]}
-            >
-              <Input
-                prefix={<LockOutlined />}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Item>
-            <Form.Item>
-              <Flex justify="space-between" align="center">
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox style={{ color: "white" }}>Remember me</Checkbox>
-                </Form.Item>
-              </Flex>
-            </Form.Item>
+            <Input prefix={<UserOutlined />} placeholder="Username" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Password!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Flex justify="space-between" align="center">
+              <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Checkbox style={{ color: "white" }}>Remember me</Checkbox>
+              </Form.Item>
+            </Flex>
+          </Form.Item>
 
-            <Form.Item>
-              <Button block type="primary" htmlType="submit">
-                Log in
-              </Button>
-              or <a href="">Register now!</a>
-            </Form.Item>
-          </Form>
-        </div>
+          <Form.Item>
+            <Button block type="primary" htmlType="submit">
+              Log in
+            </Button>
+            or <a href="">Register now!</a>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );
