@@ -14,11 +14,15 @@ import Layout from "antd/es/layout/layout";
 import IndexHeaders from "./Pages/Header";
 import Content from "./Components/Content";
 import Foter from "./Pages/Footer";
+import SignIn from "./Pages/Login/Sign-In";
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <SignIn />
+      </Router>
+      {/* <Router>
         <Layout>
           <IndexHeaders />
           <Layout>
@@ -28,7 +32,7 @@ function App() {
             </Layout>
           </Layout>
         </Layout>
-      </Router>
+      </Router> */}
     </div>
   );
 }
