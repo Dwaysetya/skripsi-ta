@@ -1,7 +1,6 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex, Layout } from "antd";
-import Label from "../../../Components/Elements/Label";
+import { Button, Checkbox, Form, Input, Flex } from "antd";
 const SignIn = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);

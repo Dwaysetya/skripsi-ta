@@ -15,12 +15,13 @@ import IndexHeaders from "./Pages/Header";
 import Content from "./Components/Content";
 import Foter from "./Pages/Footer";
 import SignIn from "./Pages/Login/Sign-In";
+import Login from "./Pages/Login";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <SignIn />
+        <Login />
       </Router>
       {/* <Router>
         <Layout>

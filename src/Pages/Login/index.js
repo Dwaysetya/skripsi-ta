@@ -1,7 +1,7 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex, Layout } from "antd";
-import Label from "../../../Components/Elements/Label";
+import Label from "../../Components/Elements/Label";
 import SignIn from "./Sign-In";
 const Login = () => {
   return (
