@@ -28,15 +28,10 @@ const ImportData = ({ onSubmit, open, onOk, onCancel }) => {
 
   const props = {
     name: "file",
+    action: "http://127.0.0.1:5000/slangword/import",
+    action: "http://127.0.0.1:5000/stopword/import",
     headers: {
       authorization: "authorization-text",
-    },
-    // Gunakan fungsi dinamis untuk menentukan URL tujuan upload
-    action: (file) => {
-      // Logika menentukan URL berdasarkan jenis file atau kebutuhan lainnya
-      return file.type === "text/csv"
-        ? "http://127.0.0.1:5000/slangword/import"
-        : "http://127.0.0.1:5000/stopword/import";
     },
     onChange(info) {
       if (info.file.status !== "uploading") {
