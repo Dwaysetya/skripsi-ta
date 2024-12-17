@@ -1,7 +1,4 @@
 import React from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex, Layout } from "antd";
-import Label from "../../Components/Elements/Label";
 import SignIn from "./Sign-In";
 const Login = () => {
   return (
@@ -19,17 +16,6 @@ const Login = () => {
           background: "#001529",
         }}
       >
-        <div style={{}}>
-          <Label
-            htmlFor="Sign-In"
-            text="Sign-In"
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              fontSize: "20px",
-            }}
-          />
-        </div>
         <div style={{ margin: "5%" }}>
           <SignIn />
         </div>
