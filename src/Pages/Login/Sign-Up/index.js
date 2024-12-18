@@ -57,6 +57,20 @@ const SignUp = () => {
                 <Input prefix={<UserOutlined />} placeholder="Username" />
               </Form.Item>
               <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Email!",
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<UserOutlined />}
+                  placeholder="axample@gmail.com"
+                />
+              </Form.Item>
+              <Form.Item
                 name="password"
                 rules={[
                   {
@@ -83,7 +97,7 @@ const SignUp = () => {
                 <Button block type="primary" htmlType="submit">
                   Log in
                 </Button>
-                <Link to="/signup">Register Now</Link>
+                <Link to="/signin">Register Now</Link>
               </Form.Item>
             </Form>
           </div>
