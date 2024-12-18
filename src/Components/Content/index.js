@@ -6,7 +6,6 @@ import Stopword from "../../Pages/Content/KamusKata/Stopword";
 import Dataset from "../../Pages/Content/Dataset";
 import Preprocessing from "../../Pages/Content/Preprocesing/Preprocesing";
 import Labeling from "../../Pages/Content/Labeling";
-import Login from "../../Pages/Login/index";
 import NotFoundPage from "../../Pages/404";
 
 const Content = () => {

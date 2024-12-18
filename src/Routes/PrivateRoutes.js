@@ -1,6 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../Pages/Login";
-import NotFoundPage from "../Pages/404";
 import SignIn from "../Pages/Login/Sign-In";
 import SignUp from "../Pages/Login/Sign-Up";
 
