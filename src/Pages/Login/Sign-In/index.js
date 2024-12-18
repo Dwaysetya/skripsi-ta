@@ -1,7 +1,8 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex, Layout } from "antd";
+import { Button, Checkbox, Form, Input, Flex } from "antd";
 import Label from "../../../Components/Elements/Label";
+import { Link } from "react-router";
 const SignIn = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -68,7 +69,7 @@ const SignIn = () => {
             <Button block type="primary" htmlType="submit">
               Log in
             </Button>
-            or <a href="">Register now!</a>
+            <Link to="/signup">Register Now</Link>
           </Form.Item>
         </Form>
       </div>

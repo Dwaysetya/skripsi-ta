@@ -1,4 +1,5 @@
 import React from "react";
+import SignUp from "./Sign-Up";
 import SignIn from "./Sign-In";
 const Login = () => {
   return (

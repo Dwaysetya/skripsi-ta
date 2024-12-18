@@ -16,12 +16,18 @@ import Content from "./Components/Content";
 import Foter from "./Pages/Footer";
 import SignIn from "./Pages/Login/Sign-In";
 import Login from "./Pages/Login";
+import LoginRoute from "./Components/LoginRoute";
+import Home from "./Pages/Home";
+import Register from "./Pages/Register";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Login />
+        <Routes>
+          <Route exact path="/" Component={Home} />
+          <Route path="/login" Component={Register} />
+        </Routes>
       </Router>
       {/* <Router>
         <Layout>

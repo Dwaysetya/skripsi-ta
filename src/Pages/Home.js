@@ -1,13 +1,21 @@
 import React from "react";
-import Sidebar from "./Sidebar";
-import Dashboard from "./Content/Dashboard";
+import IndexHeaders from "./Header";
+import { Layout } from "antd";
+import Content from "../Components/Content";
+import SidebarComponent from "./Sidebar";
 
 export default function Home() {
-  //   useScroll();
-  //   useModalDOM();
   return (
     <>
-      <Dashboard />
+      <Layout>
+        <IndexHeaders />
+        <Layout>
+          <SidebarComponent />
+          <Layout>
+            <Content />
+          </Layout>
+        </Layout>
+      </Layout>
     </>
   );
 }
