@@ -46,7 +46,7 @@ const SidebarComponent = () => {
       >
         {/* Home Menu Item */}
         <Menu.Item key="1" icon={<HomeOutlined />}>
-          <Link to="/">Dashboard</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </Menu.Item>
 
         {/* About Menu Item with SubMenu */}

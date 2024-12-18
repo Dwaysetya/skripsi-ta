@@ -5,11 +5,13 @@ import Sidebar from "./Pages/Sidebar";
 import Layout from "antd/es/layout/layout";
 import IndexHeaders from "./Pages/Header";
 import Content from "./Components/Content";
+import PrivateRoute from "./Routes/PrivateRoutes";
+import { isLoginState } from "./utils/constants";
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
+  const renderRoutes = () => {
+    if (isLoginState) {
+      return (
         <Layout>
           <IndexHeaders />
           <Layout>
@@ -19,7 +21,14 @@ function App() {
             </Layout>
           </Layout>
         </Layout>
-      </Router>
+      );
+    }
+    return <PrivateRoute />;
+  };
+
+  return (
+    <div className="App">
+      <Router>{renderRoutes()}</Router>
     </div>
   );
 }

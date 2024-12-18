@@ -7,15 +7,15 @@ import Dataset from "../../Pages/Content/Dataset";
 import Preprocessing from "../../Pages/Content/Preprocesing/Preprocesing";
 import Labeling from "../../Pages/Content/Labeling";
 import Login from "../../Pages/Login/index";
-
+import NotFoundPage from "../../Pages/404";
 
 const Content = () => {
   return (
     <div>
       <Routes>
+        <Route path="*" element={<NotFoundPage />} />
         {/* Main Route */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
         {/* About Routes */}
         <Route path="/kamuskata/slangword" element={<Slangword />} />
