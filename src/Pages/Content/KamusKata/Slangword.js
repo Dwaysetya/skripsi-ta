@@ -122,8 +122,8 @@ function Slangword() {
       // If there is a search value, filter the data
       const filteredData = Dummy.filter(
         (item) =>
-          item.katabaku.toLowerCase().includes(value.toLowerCase()) ||
-          item.kataslang.toLowerCase().includes(value.toLowerCase())
+          item.kata_baku.toLowerCase().includes(value.toLowerCase()) ||
+          item.kata_slang.toLowerCase().includes(value.toLowerCase())
       );
       setDummy(filteredData);
     }

@@ -27,12 +27,12 @@ function Dataset() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://localhost:3002/dataset/")
+      .get("http://127.0.0.1:5000/dataset")
       .then((res) => {
         console.log("Data dari server:", res.data); // Tampilkan data
-        const dataUpdate = res.data.sort((a, b) =>
-          a.createdat.localeCompare(b.createdat)
-        );
+        const dataUpdate = res.data.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
         console.log("Data yang diurutkan:", dataUpdate);
         setDummy(dataUpdate);
       })
@@ -68,9 +68,10 @@ function Dataset() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Created At", dataIndex: "createdat", key: "createdat" },
-    { title: "Ulasan", dataIndex: "ulasan", key: "ulasan" },
+    { title: "Created At", dataIndex: "created_at", key: "created_at" },
     { title: "User Name", dataIndex: "username", key: "username" },
+    { title: "Score", dataIndex: "score", key: "score" },
+    { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
   ];
   return (
     <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
