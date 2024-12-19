@@ -54,8 +54,8 @@ function Dataset() {
       // If there is a search value, filter the data
       const filteredData = Dummy.filter(
         (item) =>
-          item.createdat.toLowerCase().includes(value.toLowerCase()) ||
-          item.ulasan.toLowerCase().includes(value.toLowerCase()) ||
+          item.created_at.toLowerCase().includes(value.toLowerCase()) ||
+          item.raw_data.toLowerCase().includes(value.toLowerCase()) ||
           item.username.toLowerCase().includes(value.toLowerCase())
       );
       setDummy(filteredData);
