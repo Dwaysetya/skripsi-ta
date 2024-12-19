@@ -70,7 +70,6 @@ function Dataset() {
     },
     { title: "Created At", dataIndex: "created_at", key: "created_at" },
     { title: "User Name", dataIndex: "username", key: "username" },
-    { title: "Score", dataIndex: "score", key: "score" },
     { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
   ];
   return (
