@@ -16,7 +16,9 @@ const { SubMenu } = Menu;
 
 const SidebarComponent = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const imagePath = collapsed ? "../images/logoSS.png" : "../images/logoS.png";
+  const imagePath = collapsed
+    ? "../src/images/logoS.png"
+    : "../src/images/logoSS.png";
 
   return (
     <Sider

@@ -18,7 +18,7 @@ function Preprocessing() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://localhost:3002/preprocesing/")
+      .get("http://127.0.0.1:5000/preprocessing")
       .then((res) => {
         console.log("Data dari server:", res.data);
         const dataUpdate = res.data.sort((a, b) =>
@@ -43,9 +43,9 @@ function Preprocessing() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Created At", dataIndex: "createdat", key: "createdat" },
-    { title: "Ulasan", dataIndex: "ulasan", key: "ulasan" },
+    { title: "Created At", dataIndex: "createdat", key: "created_at" },
     { title: "User Name", dataIndex: "username", key: "username" },
+    { title: "Ulasan", dataIndex: "ulasan", key: "raw_data" },
   ];
 
   return (
