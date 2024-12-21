@@ -71,7 +71,16 @@ function HapusKataStop() {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={Dummy} />
+        <Table
+          columns={columns}
+          dataSource={Dummy}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            onChange: (page, pageSize) =>
+              setPagination({ current: page, pageSize }),
+          }}
+        />
       </Content>
     </div>
   );
