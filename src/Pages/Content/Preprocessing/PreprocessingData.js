@@ -17,6 +17,10 @@ const PreprocessingData = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const [Dummy, setDummy] = useState("");
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+  });
 
   const GetdataUsers = () => {
     axios
@@ -49,7 +53,16 @@ const PreprocessingData = () => {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={Dummy} />
+        <Table
+          columns={columns}
+          dataSource={Dummy}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            onChange: (page, pageSize) =>
+              setPagination({ current: page, pageSize }),
+          }}
+        />
       </Content>
     </div>
   );
