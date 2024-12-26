@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HomeOutlined,
   ReadOutlined,
@@ -19,6 +19,17 @@ const SidebarComponent = () => {
   const imagePath = collapsed
     ? "../src/images/logoS.png"
     : "../src/images/logoSS.png";
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+      // Hapus data login dari localStorage
+      localStorage.removeItem("isLogin");
+      // Tampilkan pesan sukses (opsional)
+      console.log("Anda telah logout");
+      // Arahkan ke halaman login
+      navigate("/signin");
+    };
 
   return (
     <Sider
@@ -70,10 +81,10 @@ const SidebarComponent = () => {
           <Link to="/labeling">Labeling</Link>
         </Menu.Item>
         <Menu.Item key="6" icon={<CheckSquareOutlined />}>
-          <Link to="/contact">Testing</Link>
+          <Link to="/Testing">Testing</Link>
         </Menu.Item>
-        <Menu.Item key="7" icon={<LogoutOutlined />}>
-          <Link to="/contact">Log-Out</Link>
+        <Menu.Item key="7" icon={<LogoutOutlined />} onClick={handleLogout}>
+          Log-Out
         </Menu.Item>
       </Menu>
     </Sider>

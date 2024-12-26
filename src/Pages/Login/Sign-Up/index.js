@@ -1,11 +1,23 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex } from "antd";
+import { Button, Checkbox, Form, Input, Flex, message } from "antd";
 import Label from "../../../Components/Elements/Label";
 import { Link } from "react-router";
+import axios from "axios";
 const SignUp = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
+    axios
+      .post("http://127.0.0.1:5000/user/signup", {
+        username: values.username,
+        password: values.password,
+      })
+      .then((res) => {
+        message.success("Data berhasil di tambahkan");
+      })
+      .catch((err) => {
+        message.error("Data Sudah Ada");
+      });
   };
   return (
     <div
@@ -56,7 +68,7 @@ const SignUp = () => {
               >
                 <Input prefix={<UserOutlined />} placeholder="Username" />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 name="email"
                 rules={[
                   {
@@ -69,7 +81,7 @@ const SignUp = () => {
                   prefix={<UserOutlined />}
                   placeholder="axample@gmail.com"
                 />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
                 name="password"
                 rules={[
@@ -95,9 +107,9 @@ const SignUp = () => {
 
               <Form.Item>
                 <Button block type="primary" htmlType="submit">
-                  Log in
+                  Register
                 </Button>
-                <Link to="/signin">Register Now</Link>
+                <Link to="/signin">Log-In</Link>
               </Form.Item>
             </Form>
           </div>

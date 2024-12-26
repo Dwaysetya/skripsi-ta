@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
   return (
     <Routes>
-      <Route path="*" element={<SignIn />} Navigate />
+      <Route path="*" element={<SignIn />} navigate />
       <Route path="/login" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
     </Routes>

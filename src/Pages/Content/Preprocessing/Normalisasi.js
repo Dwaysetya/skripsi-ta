@@ -16,25 +16,6 @@ function Normalisasi() {
     pageSize: 10,
   });
 
-  const GetdataUsers = () => {
-    axios
-      .get("http://127.0.0.1:5000/preprocessing")
-      .then((res) => {
-        console.log("Data dari server:", res.data);
-        const dataUpdate = res.data.sort((a, b) =>
-          a.createdat.localeCompare(b.createdat)
-        );
-        console.log("Data yang diurutkan:", dataUpdate);
-        setDummy(dataUpdate);
-      })
-      .catch((err) => {
-        console.log("Error fetching data:", err);
-      });
-  };
-
-  useEffect(() => {
-    GetdataUsers();
-  }, []);
 
   const columns = [
     {

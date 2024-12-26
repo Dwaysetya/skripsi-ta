@@ -1,16 +1,23 @@
 import "./App.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import React, { Component } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { Component, useEffect } from "react";
 import Sidebar from "./Pages/Sidebar";
 import Layout from "antd/es/layout/layout";
 import IndexHeaders from "./Pages/Header";
 import Content from "./Components/Content";
 import PrivateRoute from "./Routes/PrivateRoutes";
-import { isLoginState } from "./utils/constants";
+// import { isLogin } from "./utils/constants";
 
 function App() {
+  const isLogin = localStorage.getItem("isLogin");
+  useEffect(() => {
+    console.log("isLogin", isLogin);
+    renderRoutes();
+  }, [isLogin]);
+
   const renderRoutes = () => {
-    if (isLoginState) {
+    if (isLogin) {
+      console.log("Pengguna sudah login");
       return (
         <Layout>
           <IndexHeaders />
@@ -22,8 +29,10 @@ function App() {
           </Layout>
         </Layout>
       );
+    } else {
+      console.log("Pengguna belum login");
+      return <PrivateRoute />;
     }
-    return <PrivateRoute />;
   };
 
   return (

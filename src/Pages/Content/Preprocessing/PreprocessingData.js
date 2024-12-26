@@ -4,12 +4,6 @@ import axios from "axios";
 
 const { Content } = Layout;
 
-const columns = [
-  { title: "No", key: "index", render: (text, record, index) => index + 1 },
-  { title: "Created At", dataIndex: "Created At", key: "created_at" },
-  { title: "User Name", dataIndex: "username", key: "username" },
-  { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
-];
 
 const PreprocessingData = () => {
   const [] = useState(false);
@@ -26,12 +20,12 @@ const PreprocessingData = () => {
     axios
       .get("http://127.0.0.1:5000/dataset")
       .then((res) => {
-        console.log("Data dari server:", res.data); // Tampilkan data
-        // const dataUpdate = res.data.sort((a, b) => {
-        //   return new Date(a.date) - new Date(b.date);
-        // });
-        console.log("Data yang diurutkan:", res);
-        setDummy(res);
+        console.log("Data dari datset:", res.data); // Tampilkan data
+        const dataUpdate = res.data.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
+        console.log("Data yang diurutkan:", dataUpdate);
+        setDummy(dataUpdate);
       })
       .catch((err) => {
         console.log("Error fetching data:", err);
@@ -41,6 +35,18 @@ const PreprocessingData = () => {
   useEffect(() => {
     GetdataUsers();
   }, []);
+
+  const columns = [
+    {
+      title: "No",
+      key: "index",
+      render: (text, record, index) =>
+        (pagination.current - 1) * pagination.pageSize + index + 1,
+    },
+    { title: "Created At", dataIndex: "created_at", key: "created_at" },
+    { title: "User Name", dataIndex: "username", key: "username" },
+    { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
+  ];
 
   return (
     <div>

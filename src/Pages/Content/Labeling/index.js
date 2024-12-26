@@ -20,8 +20,9 @@ const Labeling = () => {
 
   const GetdataUsers = () => {
     axios
-      .get("http://localhost:3002/labeling/")
+      .get("http://127.0.0.1:5000/labelling")
       .then((res) => {
+        console.log("dway", res);
         console.log("Data dari server:", res.data);
         const dataUpdate = res.data.sort((a, b) =>
           a.createdat.localeCompare(b.createdat)

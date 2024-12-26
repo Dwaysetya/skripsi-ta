@@ -6,7 +6,7 @@ import axios from "axios";
 import Foter from "../../Footer";
 const { Content } = Layout;
 
-function CaseFolding() {
+function CaseFolding({ data }) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -15,26 +15,6 @@ function CaseFolding() {
     current: 1,
     pageSize: 10,
   });
-
-  const GetdataUsers = () => {
-    axios
-      .get("http://127.0.0.1:5000/preprocessing")
-      .then((res) => {
-        console.log("Data dari server:", res.data);
-        const dataUpdate = res.data.sort((a, b) =>
-          a.createdat.localeCompare(b.createdat)
-        );
-        console.log("Data yang diurutkan:", dataUpdate);
-        setDummy(dataUpdate);
-      })
-      .catch((err) => {
-        console.log("Error fetching data:", err);
-      });
-  };
-
-  useEffect(() => {
-    GetdataUsers();
-  }, []);
 
   const columns = [
     {
@@ -69,7 +49,7 @@ function CaseFolding() {
       >
         <Table
           columns={columns}
-          dataSource={Dummy}
+          dataSource={data}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,

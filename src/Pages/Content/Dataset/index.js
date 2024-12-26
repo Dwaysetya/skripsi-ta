@@ -29,7 +29,7 @@ function Dataset() {
     axios
       .get("http://127.0.0.1:5000/dataset")
       .then((res) => {
-        console.log("Data dari server:", res.data); // Tampilkan data
+        console.log("Data dari datset:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) => {
           return new Date(a.date) - new Date(b.date);
         });

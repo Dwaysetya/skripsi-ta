@@ -2,7 +2,6 @@ import React from "react";
 import { Flex, Layout } from "antd";
 import Label from "../../../Components/Elements/Label";
 import Foter from "../../Footer";
-import IndexHeaders from "../../Header";
 
 const { Content } = Layout;
 

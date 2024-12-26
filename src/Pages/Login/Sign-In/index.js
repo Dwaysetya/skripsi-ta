@@ -1,12 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex } from "antd";
+import { Button, Checkbox, Form, Input, Flex, message } from "antd";
 import Label from "../../../Components/Elements/Label";
-import { Link } from "react-router";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
 const SignIn = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  //   const [userName, setUserName] = useState("");
+  //   const [isPassword, setIsPassword] = useState("");
+  const navigate = useNavigate();
+
+  //   const isLogin = localStorage.getItem("isLogin");
+
+  //   useEffect(() => {
+  //     // Jika pengguna sudah login, arahkan ke halaman dashboard
+  //     if (isLogin === "true") {
+  //       navigate("/dashboard");
+  //     }
+  //   }, [isLogin, navigate]);
+
+  // Fungsi untuk menangani proses login
+  const onFinish = async (values) => {
+    localStorage.setItem("isLogin", "true");
+    // try {
+    //   console.log("dway", onFinish);
+    //   navigate("/kamuskata/slangword");
+    // } catch (error) {
+    //   console.log("salah", error);
+    // }
+    try {
+      const SignIn = await axios.post("http://127.0.0.1:5000/user/signin", {
+        username: values.username,
+        password: values.password,
+      });
+      console.log("dway", SignIn);
+      navigate("/kamuskata/slangword");
+    } catch (error) {
+      console.log("salah", error);
+    }
   };
+
   return (
     <div
       style={{
@@ -54,7 +87,12 @@ const SignIn = () => {
                   },
                 ]}
               >
-                <Input prefix={<UserOutlined />} placeholder="Username" />
+                <Input
+                  prefix={<UserOutlined />}
+                  placeholder="Username"
+
+                  //   onChange={(e) => setUserName(e.target.value)}
+                />
               </Form.Item>
               <Form.Item
                 name="password"
@@ -69,6 +107,8 @@ const SignIn = () => {
                   prefix={<LockOutlined />}
                   type="password"
                   placeholder="Password"
+
+                  //   onChange={(e) => setIsPassword(e.target.value)}
                 />
               </Form.Item>
               <Form.Item>
