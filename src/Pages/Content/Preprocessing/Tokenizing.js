@@ -1,4 +1,4 @@
-import { Layout, Table, theme, Row, Col } from "antd";
+import { Layout, Table, theme } from "antd";
 import React, { useState, useEffect } from "react";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
@@ -32,16 +32,7 @@ function Tokenizing({ data }) {
       title: "Ulasan Sesudah",
       dataIndex: "tokenizing_data",
       key: "tokenizing_data",
-      render: (text, record) => {
-        // Pisahkan perkata dengan spasi lalu gabungkan dengan koma
-        const tokenized = record.data?.split(" ");
-        return (
-          <Row>
-            <Col span={24}>{tokenized}</Col>
-          </Row>
-        );
-      },
-      width: 400, // Perbaiki typo 'widht' menjadi 'width'
+      render: (tokenizingData) => tokenizingData.join(" "),
     },
   ];
 
@@ -74,7 +65,6 @@ function Tokenizing({ data }) {
             onChange: (page, pageSize) =>
               setPagination({ current: page, pageSize }),
           }}
-          rowKey="key"
         />
       </Content>
     </div>
