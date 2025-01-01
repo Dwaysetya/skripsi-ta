@@ -74,7 +74,12 @@ function Dataset() {
   ];
   return (
     <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
-      <ImportData open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
+      <ImportData
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        url={"http://127.0.0.1:5000/dataset"}
+      />
       <Label
         htmlFor="Dataset"
         text="Dataset"

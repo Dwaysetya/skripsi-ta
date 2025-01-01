@@ -23,12 +23,12 @@ const SubmitButton = ({ form, children }) => {
   );
 };
 
-const ImportData = ({ onSubmit, open, onOk, onCancel }) => {
+const ImportData = ({ url, onSubmit, open, onOk, onCancel }) => {
   const [form] = Form.useForm();
 
   const props = {
     name: "file",
-    action: "http://127.0.0.1:5000/stopword/import",
+    action: url.toString(),
 
     headers: {
       authorization: "authorization-text",
@@ -37,11 +37,16 @@ const ImportData = ({ onSubmit, open, onOk, onCancel }) => {
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
       }
+
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
       } else if (info.file.status === "error") {
+        console.log("gagal", info);
+
         message.error(`${info.file.name} file upload failed.`);
       }
+
+      console.log("info", info);
     },
   };
 

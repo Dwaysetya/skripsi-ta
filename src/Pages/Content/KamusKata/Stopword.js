@@ -216,6 +216,7 @@ function Stopword() {
             GetdataUsers();
           }}
           onCancel={handleCancel}
+          url={"http://127.0.0.1:5000/stopword/import"}
         />
       )}
       <Label

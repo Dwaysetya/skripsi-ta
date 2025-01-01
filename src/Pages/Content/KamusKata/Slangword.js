@@ -32,7 +32,6 @@ function Slangword() {
     setIsModalOpen(true);
   };
 
-
   const GetdataUsers = () => {
     axios
       .get("http://127.0.0.1:5000/slangword")
@@ -242,6 +241,7 @@ function Slangword() {
             GetdataUsers();
           }}
           onCancel={handleCancel}
+          url={"http://127.0.0.1:5000/slangword/import"}
         />
       )}
       <Label
