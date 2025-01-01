@@ -7,6 +7,7 @@ import Foter from "../../Footer";
 const { Content } = Layout;
 
 function CaseFolding({ data }) {
+  console.log("dway", data);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -24,7 +25,11 @@ function CaseFolding({ data }) {
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     { title: "Ulasan Sebelumnya", dataIndex: "awal_data", key: "awal_data" },
-    { title: "Ulasan", dataIndex: "caseFolding_data", key: "caseFolding_data" },
+    {
+      title: "Ulasan Sesudah",
+      dataIndex: "caseFolding_data",
+      key: "caseFolding_data",
+    },
   ];
 
   return (

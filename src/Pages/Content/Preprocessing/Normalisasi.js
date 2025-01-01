@@ -1,12 +1,9 @@
 import { Layout, Table, theme } from "antd";
 import React, { useState, useEffect } from "react";
-import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
-import axios from "axios";
-import Foter from "../../Footer";
 const { Content } = Layout;
 
-function Normalisasi() {
+function Normalisasi({ data }) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -16,7 +13,6 @@ function Normalisasi() {
     pageSize: 10,
   });
 
-
   const columns = [
     {
       title: "No",
@@ -24,8 +20,16 @@ function Normalisasi() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Ulasan Sebelumnya", dataIndex: "awal_data", key: "awal_data" },
-    { title: "Ulasan", dataIndex: "caseFolding_data", key: "normalize_data" },
+    {
+      title: "Ulasan Cleansing",
+      dataIndex: "cleansing_data",
+      key: "cleansing_data",
+    },
+    {
+      title: "Ulasan Sesudah",
+      dataIndex: "normalize_data",
+      key: "normalize_data",
+    },
   ];
 
   return (
@@ -50,7 +54,7 @@ function Normalisasi() {
       >
         <Table
           columns={columns}
-          dataSource={Dummy}
+          dataSource={data}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,

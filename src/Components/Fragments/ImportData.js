@@ -28,7 +28,7 @@ const ImportData = ({ onSubmit, open, onOk, onCancel }) => {
 
   const props = {
     name: "file",
-    action: "http://127.0.0.1:5000/slangword/import",
+    action: "http://127.0.0.1:5000/stopword/import",
 
     headers: {
       authorization: "authorization-text",

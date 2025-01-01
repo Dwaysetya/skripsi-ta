@@ -6,7 +6,7 @@ import axios from "axios";
 import Foter from "../../Footer";
 const { Content } = Layout;
 
-function HapusKataStop() {
+function HapusKataStop({ data }) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -16,7 +16,6 @@ function HapusKataStop() {
     pageSize: 10,
   });
 
-
   const columns = [
     {
       title: "No",
@@ -24,10 +23,14 @@ function HapusKataStop() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Ulasan Sebelumnya", dataIndex: "awal_data", key: "awal_data" },
     {
-      title: "Ulasan",
-      dataIndex: "caseFolding_data",
+      title: "Ulasan Normalisasi",
+      dataIndex: "normalize_data",
+      key: "normalize_data",
+    },
+    {
+      title: "Ulasan Sesudah",
+      dataIndex: "stopwordsRemoval_data",
       key: "stopwordsRemoval_data",
     },
   ];
@@ -54,7 +57,7 @@ function HapusKataStop() {
       >
         <Table
           columns={columns}
-          dataSource={Dummy}
+          dataSource={data}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,

@@ -6,7 +6,7 @@ import axios from "axios";
 import Foter from "../../Footer";
 const { Content } = Layout;
 
-function Steaming() {
+function Steaming({ data }) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -16,7 +16,6 @@ function Steaming() {
     pageSize: 10,
   });
 
-
   const columns = [
     {
       title: "No",
@@ -24,8 +23,16 @@ function Steaming() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Ulasan Sebelumnya", dataIndex: "awal_data", key: "awal_data" },
-    { title: "Ulasan", dataIndex: "caseFolding_data", key: "stemming_data" },
+    {
+      title: "Ulasan Hapus Kata Stop",
+      dataIndex: "stopwordsRemoval_data",
+      key: "stopwordsRemoval_data",
+    },
+    {
+      title: "Ulasan Sesudah",
+      dataIndex: "stemming_data",
+      key: "stemming_data",
+    },
   ];
 
   return (
@@ -50,7 +57,7 @@ function Steaming() {
       >
         <Table
           columns={columns}
-          dataSource={Dummy}
+          dataSource={data}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,

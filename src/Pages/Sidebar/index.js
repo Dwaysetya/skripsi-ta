@@ -17,19 +17,19 @@ const { SubMenu } = Menu;
 const SidebarComponent = () => {
   const [collapsed, setCollapsed] = useState(false);
   const imagePath = collapsed
-    ? "../src/images/logoS.png"
-    : "../src/images/logoSS.png";
+    ? "../../images/saquS.png"
+    : "../../src/images/saquL.png";
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-      // Hapus data login dari localStorage
-      localStorage.removeItem("isLogin");
-      // Tampilkan pesan sukses (opsional)
-      console.log("Anda telah logout");
-      // Arahkan ke halaman login
-      navigate("/signin");
-    };
+  const handleLogout = () => {
+    // Hapus data login dari localStorage
+    localStorage.removeItem("isLogin");
+    // Tampilkan pesan sukses (opsional)
+    console.log("Anda telah logout");
+    // Arahkan ke halaman login
+    navigate("/signin");
+  };
 
   return (
     <Sider
@@ -41,12 +41,11 @@ const SidebarComponent = () => {
           alt="Logo"
           src={imagePath}
           style={{
-            display: "flex",
             padding: "5px",
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            height: "10vh",
+            height: "100%",
           }}
           onClick={() => setCollapsed(!collapsed)}
         />

@@ -6,7 +6,7 @@ import axios from "axios";
 import Foter from "../../Footer";
 const { Content } = Layout;
 
-function Cleansing() {
+function Cleansing({ data }) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -16,7 +16,6 @@ function Cleansing() {
     pageSize: 10,
   });
 
-
   const columns = [
     {
       title: "No",
@@ -24,8 +23,16 @@ function Cleansing() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Ulasan Sebelumnya", dataIndex: "awal_data", key: "awal_data" },
-    { title: "Ulasan", dataIndex: "caseFolding_data", key: "cleansing_data" },
+    {
+      title: "Ulasan Case Folding",
+      dataIndex: "caseFolding_data",
+      key: "caseFolding_data",
+    },
+    {
+      title: "Ulasan Cleansing",
+      dataIndex: "cleansing_data",
+      key: "cleansing_data",
+    },
   ];
 
   return (
@@ -50,7 +57,7 @@ function Cleansing() {
       >
         <Table
           columns={columns}
-          dataSource={Dummy}
+          dataSource={data}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,

@@ -1,54 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { Input, Layout, Table, theme } from "antd";
-import IndexButton from "../../../Components/Elements/Button";
+import { useState, useEffect } from "react";
+import { Layout, Table, theme, Input, Form, message, Modal } from "antd";
 import Label from "../../../Components/Elements/Label";
+import IndexButton from "../../../Components/Elements/Button";
 import axios from "axios";
+import ImportData from "../../../Components/Fragments/ImportData";
 import Foter from "../../Footer";
-
 const { Content } = Layout;
 const { Search } = Input;
 
-const Labeling = () => {
+function Labeling() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const [Dummy, setDummy] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [Dummy, setDummy] = useState([]);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
   });
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const GetdataUsers = () => {
     axios
       .get("http://127.0.0.1:5000/labelling")
       .then((res) => {
-        console.log("dway", res);
-        console.log("Data dari server:", res.data);
-        const dataUpdate = res.data.sort((a, b) =>
-          a.createdat.localeCompare(b.createdat)
-        );
-        console.log("Data yang diurutkan:", dataUpdate);
-        setDummy(dataUpdate);
+        console.log("Data dari datset:", res); // Tampilkan data
+        setDummy(res.data);
       })
       .catch((err) => {
         console.log("Error fetching data:", err);
       });
   };
 
+  console.log("dway", Dummy);
+
   useEffect(() => {
     GetdataUsers();
   }, []);
 
   const handleSearch = (value) => {
-    const filteredData = Dummy.filter(
-      (item) =>
-        item.label.toLowerCase().includes(value.toLowerCase()) ||
-        item.username.toLowerCase().includes(value.toLowerCase()) ||
-        item.ulasan.toLowerCase().includes(value.toLowerCase())
-    );
-    setDummy(filteredData);
+    // If no search value, reset the data to the full list by calling GetdataUsers
+    if (value.trim() === "") {
+      console.log("Resetting to full data...");
+      GetdataUsers(); // Reset to the original full dataset
+    } else {
+      // If there is a search value, filter the data
+      const filteredData = GetdataUsers.filter(
+        (item) =>
+          item.created_at.toLowerCase().includes(value.toLowerCase()) ||
+          item.raw_data.toLowerCase().includes(value.toLowerCase()) ||
+          item.username.toLowerCase().includes(value.toLowerCase())
+      );
+      setDummy(filteredData);
+    }
   };
-
   const columns = [
     {
       title: "No",
@@ -56,16 +66,18 @@ const Labeling = () => {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Created At", dataIndex: "createdat", key: "createdat" },
+    { title: "Created At", dataIndex: "created_at", key: "created_at" },
     { title: "User Name", dataIndex: "username", key: "username" },
-    { title: "Ulasan", dataIndex: "ulasan", key: "ulasan" },
+    { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
+    { title: "Score", dataIndex: "score", key: "score" },
     { title: "Label", dataIndex: "label", key: "label" },
   ];
   return (
     <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
+      <ImportData open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
       <Label
-        htmlFor="Labeling"
-        text="Labeling"
+        htmlFor="Dataset"
+        text="Dataset"
         style={{
           fontWeight: "bold",
           color: "black",
@@ -106,11 +118,8 @@ const Labeling = () => {
             gap: "10px",
           }}
         >
-          <IndexButton
-            type="primary"
-            // onClick={() => handleButtonClick("StartLabeling")}
-          >
-            Start Labeling
+          <IndexButton type="primary" onClick={() => setIsModalOpen(true)}>
+            Import Data
           </IndexButton>
         </div>
       </div>
@@ -125,7 +134,7 @@ const Labeling = () => {
       >
         <Table
           columns={columns}
-          dataSource={Dummy}
+          dataSource={[Dummy]}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
@@ -137,5 +146,6 @@ const Labeling = () => {
       <Foter />
     </Layout>
   );
-};
+}
+
 export default Labeling;

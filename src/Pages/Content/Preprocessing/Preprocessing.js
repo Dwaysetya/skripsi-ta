@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Layout, theme, Col, Row, Table } from "antd";
+import { Layout, theme, Col, Row, Skeleton } from "antd";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
 import CaseFolding from "./CaseFolding";
@@ -22,10 +22,12 @@ const Preprocessing = () => {
   const [Preprocessing, setPreprocessing] = useState("");
   const [kontenAktif, setKontenAktif] = useState("A");
   const [showOtherButtons, setShowOtherButtons] = useState(false); // State untuk kontrol visibilitas tombol lainnya
+  const [isLoading, setIsLoading] = useState(false);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
   });
+  console.log("dddd", Preprocessing);
 
   const kontenMapping = {
     A: <PreprocessingData />,
@@ -43,6 +45,7 @@ const Preprocessing = () => {
   };
 
   const handlePreprocessingData = () => {
+    setIsLoading(true);
     axios
       .get("http://127.0.0.1:5000/preprocessing")
       .then((res) => {
@@ -55,6 +58,9 @@ const Preprocessing = () => {
       })
       .catch((err) => {
         console.log("Error fetching data:", err);
+      })
+      .finally(() => {
+        setIsLoading(false); // Akhiri loading
       });
   };
 
@@ -134,7 +140,11 @@ const Preprocessing = () => {
           borderRadius: borderRadiusLG,
         }}
       >
-        {kontenMapping[kontenAktif] || <div>Masukkan data</div>}
+        {isLoading ? (
+          <Skeleton active /> // Tampilan saat loading
+        ) : (
+          kontenMapping[kontenAktif] || <div>Masukkan data</div>
+        )}
       </Content>
       <Foter />
     </Layout>
