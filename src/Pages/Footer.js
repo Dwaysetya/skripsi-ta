@@ -1,5 +1,5 @@
+import { Layout } from "antd";
 import React from "react";
-import { Layout, Menu, theme } from "antd";
 const { Footer } = Layout;
 
 function Foter() {

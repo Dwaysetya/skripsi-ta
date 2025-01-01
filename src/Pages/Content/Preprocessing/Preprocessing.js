@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Layout, theme, Col, Row, Skeleton } from "antd";
+import { Col, Layout, Row, Skeleton, theme } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
-import CaseFolding from "./CaseFolding";
-import PreprocessingData from "./PreprocessingData";
 import Foter from "../../Footer";
+import CaseFolding from "./CaseFolding";
 import Cleansing from "./Cleansing";
-import Normalisasi from "./Normalisasi";
 import HapusKataStop from "./HapusKataStop";
+import Normalisasi from "./Normalisasi";
+import PreprocessingData from "./PreprocessingData";
 import Steaming from "./Steaming";
 import Tokenizing from "./Tokenizing";
-import axios from "axios";
+import { BASE_URL } from "../../../utils/constants";
 
 const { Content } = Layout;
 
@@ -47,7 +48,7 @@ const Preprocessing = () => {
   const handlePreprocessingData = () => {
     setIsLoading(true);
     axios
-      .get("http://127.0.0.1:5000/preprocessing")
+      .get(`${BASE_URL}/preprocessing`)
       .then((res) => {
         console.log("Data dari datset:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) => {
@@ -66,7 +67,7 @@ const Preprocessing = () => {
 
   const GetdataUsers = () => {
     axios
-      .get("http://127.0.0.1:5000/dataset")
+      .get(`${BASE_URL}/dataset`)
       .then((res) => {
         console.log("Data dari datset:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) => {

@@ -1,5 +1,5 @@
 import { Layout, Table, theme } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Label from "../../../Components/Elements/Label";
 const { Content } = Layout;
 

@@ -1,12 +1,12 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import NotFoundPage from "../../Pages/404";
 import Dashboard from "../../Pages/Content/Dashboard";
+import Dataset from "../../Pages/Content/Dataset";
 import Slangword from "../../Pages/Content/KamusKata/Slangword";
 import Stopword from "../../Pages/Content/KamusKata/Stopword";
-import Dataset from "../../Pages/Content/Dataset";
-import Preprocessing from "../../Pages/Content/Preprocessing/Preprocessing";
 import Labeling from "../../Pages/Content/Labeling";
-import NotFoundPage from "../../Pages/404";
+import Preprocessing from "../../Pages/Content/Preprocessing/Preprocessing";
 
 const Content = () => {
   return (

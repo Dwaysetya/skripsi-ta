@@ -1,9 +1,7 @@
-import React from "react";
 import { Layout } from "antd";
-import Dashboard from "./Content/Dashboard";
-import Sidebar from "./Sidebar";
-import Slangword from "./Content/KamusKata/Slangword";
+import React from "react";
 import { useLocation } from "react-router";
+import Sidebar from "./Sidebar";
 const { Header: AntHeader, Content, Sider } = Layout;
 
 function LayoutPages({ children }) {

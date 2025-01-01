@@ -1,6 +1,6 @@
-import React from "react";
-import { Layout, Menu, theme } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { Layout, Menu, theme } from "antd";
+import React from "react";
 // import { Color } from "antd/es/color-picker";
 const { Header } = Layout;
 

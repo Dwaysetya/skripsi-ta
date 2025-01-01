@@ -1,7 +1,7 @@
-import React from "react";
-import IndexHeaders from "./Header";
 import { Layout } from "antd";
+import React from "react";
 import Content from "../Components/Content";
+import IndexHeaders from "./Header";
 import SidebarComponent from "./Sidebar";
 
 export default function Home() {

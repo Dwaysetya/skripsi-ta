@@ -1,7 +1,2 @@
-const isLogin = localStorage.getItem("isLogin");
-
-if (isLogin === "true") {
-  console.log("Pengguna sudah login");
-} else {
-  console.log("Pengguna belum login");
-}
+export const BASE_URL = "http://127.0.0.1:5000";
+export const isLoginState = localStorage.getItem("isLogin");

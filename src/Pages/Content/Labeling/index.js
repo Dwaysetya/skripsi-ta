@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
-import { Layout, Table, theme, Input, Form, message, Modal } from "antd";
-import Label from "../../../Components/Elements/Label";
-import IndexButton from "../../../Components/Elements/Button";
+import { Input, Layout, Table, theme } from "antd";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import IndexButton from "../../../Components/Elements/Button";
+import Label from "../../../Components/Elements/Label";
 import ImportData from "../../../Components/Fragments/ImportData";
 import Foter from "../../Footer";
+import { BASE_URL } from "../../../utils/constants";
 const { Content } = Layout;
 const { Search } = Input;
 
@@ -27,7 +28,7 @@ function Labeling() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://127.0.0.1:5000/labelling")
+      .get(`${BASE_URL}/labelling`)
       .then((res) => {
         console.log("Data dari datset:", res); // Tampilkan data
         setDummy(res.data);
@@ -78,7 +79,7 @@ function Labeling() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        url={"http://127.0.0.1:5000/stopword/import"}
+        url={`${BASE_URL}/stopword/import`}
       />
       <Label
         htmlFor="Dataset"

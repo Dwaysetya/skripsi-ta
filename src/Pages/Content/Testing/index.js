@@ -1,7 +1,7 @@
+import { Form, Input, Layout, Radio, Space, theme } from "antd";
 import React, { useState } from "react";
-import { Layout, theme, Form, Input, Radio, Space } from "antd";
-import TambahData from "../../../Components/Fragments/TambahData";
 import Label from "../../../Components/Elements/Label";
+import TambahData from "../../../Components/Fragments/TambahData";
 
 const Testing = () => {
   const [] = useState(false);

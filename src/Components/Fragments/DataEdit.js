@@ -1,6 +1,5 @@
-import { useState } from "react";
-import React from "react";
-import { Button, Form, Input, Space, Modal, message, Upload } from "antd";
+import { Form, Input, Modal, message } from "antd";
+import React, { useState } from "react";
 
 const DataEdit = ({ onSubmit, open, onOk, onCancel, childern }) => {
   const [form] = Form.useForm();

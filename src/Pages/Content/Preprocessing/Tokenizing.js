@@ -1,16 +1,12 @@
 import { Layout, Table, theme } from "antd";
-import React, { useState, useEffect } from "react";
-import IndexButton from "../../../Components/Elements/Button";
+import React, { useState } from "react";
 import Label from "../../../Components/Elements/Label";
-import axios from "axios";
-import Foter from "../../Footer";
 const { Content } = Layout;
 
 function Tokenizing({ data }) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const [Dummy, setDummy] = useState("");
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,

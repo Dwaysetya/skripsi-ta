@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex, message } from "antd";
-import Label from "../../../Components/Elements/Label";
+import { Button, Checkbox, Flex, Form, Input } from "antd";
 import axios from "axios";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Label from "../../../Components/Elements/Label";
+import { BASE_URL } from "../../../utils/constants";
 
 const SignIn = () => {
   //   const [userName, setUserName] = useState("");
@@ -29,7 +30,7 @@ const SignIn = () => {
     //   console.log("salah", error);
     // }
     try {
-      const SignIn = await axios.post("http://127.0.0.1:5000/user/signin", {
+      const SignIn = await axios.post(`${BASE_URL}/user/signin`, {
         username: values.username,
         password: values.password,
       });

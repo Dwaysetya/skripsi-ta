@@ -1,14 +1,15 @@
-import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex, message } from "antd";
-import Label from "../../../Components/Elements/Label";
-import { Link } from "react-router";
+import { Button, Checkbox, Flex, Form, Input, message } from "antd";
 import axios from "axios";
+import React from "react";
+import { Link } from "react-router";
+import Label from "../../../Components/Elements/Label";
+import { BASE_URL } from "../../../utils/constants";
 const SignUp = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
     axios
-      .post("http://127.0.0.1:5000/user/signup", {
+      .post(`${BASE_URL}/user/signup`, {
         username: values.username,
         password: values.password,
       })

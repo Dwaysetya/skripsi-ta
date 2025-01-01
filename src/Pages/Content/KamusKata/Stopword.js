@@ -1,12 +1,13 @@
+import { Form, Input, Layout, Modal, Table, message, theme } from "antd";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Layout, Table, theme, Input, Form, message, Modal } from "antd";
-import TambahData from "../../../Components/Fragments/TambahData";
-import ImportData from "../../../Components/Fragments/ImportData";
+import Swal from "sweetalert2";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
-import axios, { Axios } from "axios";
+import ImportData from "../../../Components/Fragments/ImportData";
+import TambahData from "../../../Components/Fragments/TambahData";
 import Foter from "../../Footer";
-import Swal from "sweetalert2";
+import { BASE_URL } from "../../../utils/constants";
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -33,7 +34,7 @@ function Stopword() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://127.0.0.1:5000/stopword")
+      .get(`${BASE_URL}/stopword`)
       .then((res) => {
         console.log("Data dari server:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) =>
@@ -59,7 +60,7 @@ function Stopword() {
 
     try {
       const newId = `id${Dummy.length + 1}`;
-      const response = await axios.post("http://127.0.0.1:5000/stopword", {
+      const response = await axios.post(`${BASE_URL}/stopword`, {
         id: newId,
         kata_stop: Stopword,
       });
@@ -89,7 +90,7 @@ function Stopword() {
     if (Stopword) {
       // KETIKA KLIK YES AKAN MASUK KE FUNCTION INI
       axios
-        .put(`http://127.0.0.1:5000/stopword/update/${recordData.id}`, {
+        .put(`${BASE_URL}/stopword/update/${recordData.id}`, {
           kata_stop: Stopword,
         })
         .then((res) => {
@@ -135,7 +136,7 @@ function Stopword() {
       if (result.isConfirmed) {
         // KETIKA KLIK YES AKAN MASUK KE FUNCTION INI
         axios
-          .delete(`http://127.0.0.1:5000/stopword/delete/${record.id}`)
+          .delete(`${BASE_URL}/stopword/delete/${record.id}`)
           .then((res) => {
             // KETIKA SUKSES AKAN GET DATA KEMBALI SUPAYA TERUPDATE
             GetdataUsers();
@@ -216,7 +217,7 @@ function Stopword() {
             GetdataUsers();
           }}
           onCancel={handleCancel}
-          url={"http://127.0.0.1:5000/stopword/import"}
+          url={`${BASE_URL}/stopword/import`}
         />
       )}
       <Label

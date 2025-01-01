@@ -5,6 +5,7 @@ import IndexButton from "../../../Components/Elements/Button";
 import axios from "axios";
 import ImportData from "../../../Components/Fragments/ImportData";
 import Foter from "../../Footer";
+import { BASE_URL } from "../../../utils/constants";
 const { Content } = Layout;
 const { Search } = Input;
 
@@ -27,7 +28,7 @@ function Dataset() {
 
   const GetdataUsers = () => {
     axios
-      .get("http://127.0.0.1:5000/dataset")
+      .get(`${BASE_URL}/dataset`)
       .then((res) => {
         console.log("Data dari datset:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) => {
@@ -78,7 +79,7 @@ function Dataset() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        url={"http://127.0.0.1:5000/dataset"}
+        url={`${BASE_URL}/dataset`}
       />
       <Label
         htmlFor="Dataset"

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
 import { Layout, Table, theme } from "antd";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { BASE_URL } from "../../../utils/constants";
 
 const { Content } = Layout;
-
 
 const PreprocessingData = () => {
   const [] = useState(false);
@@ -18,7 +18,7 @@ const PreprocessingData = () => {
 
   const GetdataUsers = () => {
     axios
-      .get("http://127.0.0.1:5000/dataset")
+      .get(`${BASE_URL}/dataset`)
       .then((res) => {
         console.log("Data dari datset:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) => {
