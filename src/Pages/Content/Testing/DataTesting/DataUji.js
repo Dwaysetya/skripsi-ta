@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Label from "../../../../Components/Elements/Label";
 const { Content } = Layout;
 
-function DataLatih() {
+function DataUji() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -20,19 +20,24 @@ function DataLatih() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Ulasan Sebelumnya", dataIndex: "raw_data", key: "raw_data" },
+    { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
     {
-      title: "label",
-      dataIndex: "label",
-      key: "label",
+      title: "Label(aktual)",
+      dataIndex: "actual_label",
+      key: "actual_label",
+    },
+    {
+      title: "Label(prediksi)",
+      dataIndex: "predicted_labe",
+      key: "predicted_labe",
     },
   ];
 
   return (
     <div>
       <Label
-        htmlFor="Data Latih"
-        text="Data Latih"
+        htmlFor="Data Uji"
+        text="Data Uji"
         style={{
           color: "black",
           fontSize: "20px",
@@ -54,4 +59,4 @@ function DataLatih() {
   );
 }
 
-export default DataLatih;
+export default DataUji;

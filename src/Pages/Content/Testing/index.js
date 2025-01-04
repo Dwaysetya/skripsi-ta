@@ -8,79 +8,134 @@ import {
   Space,
   Row,
   Col,
-  Skeleton,
+  Table,
+  Divider,
+  Statistic,
+  Card,
+  message,
 } from "antd";
 import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
-import TambahData from "../../../Components/Fragments/TambahData";
-import TampilData from "./DataTesting/TampilData";
-import Foter from "../../Footer";
+import Footer from "../../Footer";
 import NotFoundPage from "../../404";
 import ModalTesting from "../../../Components/Fragments/ModalTesting";
 import DataLatih from "./DataTesting/DataLatih";
+import DataUji from "./DataTesting/DataUji";
+import Column from "antd/es/table/Column";
+import ColumnGroup from "antd/es/table/ColumnGroup";
+import axios from "axios";
+import { BASE_URL } from "../../../utils/constants";
 
 const { Content } = Layout;
 
 const Testing = () => {
-  const [] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("UjiData");
+  const [kontenAktif, setKontenAktif] = useState("A");
+  const [hideTestingButton, setHideTestingButton] = useState(false);
+  const [showOtherButtons, setShowOtherButtons] = useState(false);
+  const [radioValue, setRadioValue] = useState(1);
+  const [nilaiK, setNilaiK] = useState("");
+  const [nilaiRatio, setNilaiRatio] = useState("9:1");
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("UjiData");
-  const [isRenderView, setIsRenderView] = useState(false);
-  const [hideTestingButton, setHideTestingButton] = useState(false);
-  const [showOtherButtons, setShowOtherButtons] = useState(false);
-  const [kontenAktif, setKontenAktif] = useState("A");
-  const [isClicked, setIsClicked] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const kontenMapping = {
-    A: <Testing />,
-    B: <TampilData />,
-    C: <DataLatih />,
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-    setIsRenderView(true);
-  };
-  const handleClick = () => {
-    setIsClicked(!isClicked); // Toggle state
-  };
-
-  const handleTestingClick = () => {
-    setHideTestingButton(true);
-    setShowOtherButtons(true);
-    setIsModalOpen(false);
-  };
-
-  const renderView = () => {
-    if (isRenderView) {
-      return <TampilData />;
-    }
-    return <NotFoundPage />;
-  };
-
-  const handleCancel = () => setIsModalOpen(false);
-
-  const handleButtonClick = (content) => {
+  const handleModalOpen = (content) => {
     setModalContent(content);
     setIsModalOpen(true);
   };
 
-  const [value, setValue] = useState(1);
-  const onChange = (e) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
+  const handleModalClose = () => setIsModalOpen(false);
+
+  const handleTestingClick = () => {
+    setHideTestingButton(true);
+    setShowOtherButtons(true);
   };
+
+  const renderView = () => {
+    switch (kontenAktif) {
+      case "B":
+        return <DataUji />;
+      case "C":
+        return <DataLatih />;
+      default:
+        return <NotFoundPage />;
+    }
+  };
+
+  const buttonList = [
+    { key: "B", label: "Data Uji" },
+    { key: "C", label: "Data Latih" },
+  ];
+
+  const handleRadioChange = (e) => {
+    const selectedValue = e.target.value;
+    setRadioValue(selectedValue);
+
+    // Map nilai radio ke rasio yang sesuai
+    const ratioMap = {
+      1: "9.1",
+      2: "8.2",
+      3: "7.3",
+      4: "6.4",
+      5: "5.5",
+    };
+
+    setNilaiRatio(ratioMap[selectedValue] || "9:1");
+  };
+
+  const handleTestingData = async () => {
+    if (!nilaiK || !nilaiRatio) {
+      message.error("Harap Masukkan Rasio dan Nilai K");
+      return;
+    }
+    try {
+      const response = await axios.post(`${BASE_URL}/testing`, {
+        ratio: nilaiRatio,
+        k: parseInt(nilaiK, 10), // Pastikan nilai K adalah angka
+      });
+      console.log("Data Berhasil Dikirim", response.data);
+      message.success("Rasio dan K Berhasil Diinput!");
+      setIsModalOpen(false);
+      handleTestingClick();
+    } catch (error) {
+      console.log("Terjadi Kesalahan Saat Mengirim Data:", error);
+      message.error("Gagal Mengirim Rasio dan Nilai K");
+    }
+  };
+
+  // Styles
+  const styles = {
+    layout: { marginLeft: "14%", marginTop: "5%" },
+    label: {
+      fontWeight: "bold",
+      color: "black",
+      fontSize: "20px",
+      margin: "20px",
+    },
+    content: {
+      margin: "5px 15px 24px 16px",
+      padding: 24,
+      minHeight: 280,
+      background: colorBgContainer,
+      borderRadius: borderRadiusLG,
+    },
+    buttonContainer: {
+      flexGrow: 1,
+      display: "flex",
+      justifyContent: "flex-start",
+      margin: "5px 0 24px 16px",
+    },
+  };
+
   return (
-    <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
+    <Layout style={styles.layout}>
       <ModalTesting
         open={isModalOpen}
-        onOk={handleTestingClick}
-        onCancel={handleCancel}
+        onOk={handleTestingData}
+        onCancel={handleModalClose}
       >
         <div>
           <p>
@@ -91,8 +146,8 @@ const Testing = () => {
           </p>
         </div>
         <Radio.Group
-          onChange={onChange}
-          value={value}
+          onChange={handleRadioChange}
+          value={radioValue}
           style={{ margin: "10px" }}
         >
           <Space direction="vertical">
@@ -108,50 +163,32 @@ const Testing = () => {
           label="Nilai K"
           rules={[{ required: true, message: "Please input your nilai K!" }]}
         >
-          <Input />
+          <Input
+            value={nilaiK}
+            onChange={(e) => setNilaiK(e.target.value)}
+            placeholder="Masukkan Nilai K"
+          />
         </Form.Item>
       </ModalTesting>
-      <Label
-        htmlFor="Testing"
-        text="Testing"
-        style={{
-          fontWeight: "bold",
-          color: "black",
-          fontSize: "20px",
-          margin: "20px",
-        }}
-      />
-      <div
-        style={{
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "flex-start",
-          margin: "5px 0 24px 16px",
-        }}
-      >
+
+      <Label htmlFor="Testing" text="Testing" style={styles.label} />
+
+      <div style={styles.buttonContainer}>
         {!hideTestingButton && (
           <IndexButton
             type="primary"
-            onClick={() => {
-              handleButtonClick("UjiData");
-            }}
+            onClick={() => handleModalOpen("UjiData")}
           >
             Uji Data
           </IndexButton>
         )}
         <Row gutter={[16]}>
           {showOtherButtons &&
-            [
-              { key: "B", label: "Data Uji" },
-              { key: "C", label: "Data Latih" },
-            ].map((btn) => (
+            buttonList.map((btn) => (
               <Col key={btn.key} span={12}>
                 <IndexButton
                   type="primary"
-                  onClick={() => {
-                    setKontenAktif(btn.key);
-                    handleClick();
-                  }}
+                  onClick={() => setKontenAktif(btn.key)}
                 >
                   {btn.label}
                 </IndexButton>
@@ -159,6 +196,8 @@ const Testing = () => {
             ))}
         </Row>
       </div>
+
+      <Content style={styles.content}>{renderView()}</Content>
       <Content
         style={{
           margin: "5px 15px 24px 16px",
@@ -168,14 +207,67 @@ const Testing = () => {
           borderRadius: borderRadiusLG,
         }}
       >
-        {isLoading ? (
-          <Skeleton active /> // Tampilan saat loading
-        ) : (
-          kontenMapping[kontenAktif] || <div>Masukkan data</div>
-        )}
+        <Divider> Tabel Confusion Matrix</Divider>
+        <Table>
+          <Column title="Data Akurasi" dataIndex="akurasi" key="akurasi" />
+          <ColumnGroup title="Data Prediksi">
+            <Column
+              title="Positif"
+              dataIndex="positive_count"
+              key="positive_count"
+            />
+            <Column
+              title="Negatif"
+              dataIndex="negative_count"
+              key="negative_count"
+            />
+          </ColumnGroup>
+          <Column title="Total" dataIndex="f1_score" key="f1_score" />
+        </Table>
+        <Divider> Detail Perhitungan Evaluasi</Divider>
+        <Table>
+          <Column title="Akurasi" dataIndex="accuracy" key="accuracy" />
+          <Column title="Presisi" dataIndex="precision" key="precision" />
+          <Column title="Recall" dataIndex="recall" key="recall" />
+        </Table>
+        <Divider> Detail Perhitungan Evaluasi</Divider>
+        <Table>
+          <Column title="Akurasi" dataIndex="accuracy" key="accuracy" />
+          <Column title="Presisi" dataIndex="precision" key="precision" />
+          <Column title="Recall" dataIndex="recall" key="recall" />
+        </Table>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Card bordered={false}>
+              <Statistic
+                title="Positive"
+                value={11.28}
+                precision={2}
+                valueStyle={{
+                  color: "#3f8600",
+                }}
+                suffix="%"
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card bordered={false}>
+              <Statistic
+                title="Negative"
+                value={9.3}
+                precision={2}
+                valueStyle={{
+                  color: "#cf1322",
+                }}
+                suffix="%"
+              />
+            </Card>
+          </Col>
+        </Row>
       </Content>
-      <Foter />
+      <Footer />
     </Layout>
   );
 };
+
 export default Testing;
