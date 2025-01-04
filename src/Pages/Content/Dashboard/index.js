@@ -1,14 +1,37 @@
-import { Flex, Layout } from "antd";
-import React from "react";
+import { Layout, Statistic, Row, Col, Table } from "antd";
+import React, { useEffect, useState } from "react";
 import Label from "../../../Components/Elements/Label";
 import Foter from "../../Footer";
+import axios from "axios";
+import { BASE_URL } from "../../../utils/constants";
 
 const { Content } = Layout;
 
-// import Preprocessing from "./Dashboard/Preprocessing/Index";
 const Dashboard = () => {
-  const colorBgContainer = "#ffffff"; // Default value, adjust accordingly
+  const [datasetCount, setDatasetCount] = useState(0); // State untuk jumlah dataset
+  const colorBgContainer = "#ffffff"; // Default warna background
   const borderRadiusLG = "8px";
+
+  useEffect(() => {
+    // Panggil API untuk mendapatkan total dataset
+    axios
+      .get(`${BASE_URL}/dataset/total`)
+      .then((res) => {
+        console.log("Respons API:", res.data); // Debugging respons API
+        const total = res.data?.count || 0; // Ambil total jika ada, default ke 0
+        console.log("1111", total);
+        setDatasetCount(total);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setDatasetCount(0); // Pastikan ada fallback jika API gagal
+      });
+  }, []);
+
+  console.log("dway", datasetCount);
+
+  const columns = [{ title: "Ulasan", dataIndex: "count", key: "count" }];
+
   return (
     <Layout style={{ marginLeft: "17%", marginTop: "7%" }}>
       <Label
@@ -35,11 +58,9 @@ const Dashboard = () => {
             padding: "10px",
             width: "100%",
             color: "#fff",
-            lineHeight: "160px",
-            textAlign: "center",
-            background: "#364d79",
             lineHeight: "2",
             textAlign: "center",
+            background: "#364d79",
           }}
         >
           <h1>
@@ -49,41 +70,45 @@ const Dashboard = () => {
             MENGGUNAKAN ALGORITMA K-NN DAN LEXICON
           </h1>
         </div>
-        <Flex style={{ gap: 300, margin: "20px" }}>
-          <div
-            style={{
-              margin: "30px 0 0 0",
-              width: "40%",
-              height: 150,
-              background: "#364d79",
-            }}
-          >
-            <div style={{ color: "#fff", textAlign: "center", marginTop: 30 }}>
+        <Row gutter={[20, 20]} style={{ marginTop: "20px" }}>
+          <Col span={12}>
+            <div
+              style={{
+                height: 150,
+                background: "#364d79",
+                borderRadius: borderRadiusLG,
+                padding: "20px",
+                textAlign: "center",
+                color: "#fff",
+              }}
+            >
               <h3>Jumlah Dataset</h3>
+              <Statistic
+                value={datasetCount}
+                valueStyle={{ color: "#52c41a", fontSize: "20px" }}
+              />
             </div>
-            <div style={{ color: "#fff", margin: "50px 0 0 30px" }}>
-              <h3>1500</h3>
-            </div>
-          </div>
-          <div
-            style={{
-              margin: "30px 0 0 0",
-              width: "40%",
-              height: 150,
-              background: "#364d79",
-            }}
-          >
-            <div style={{ color: "#fff", textAlign: "center", marginTop: 30 }}>
+          </Col>
+          <Col span={12}>
+            <div
+              style={{
+                height: 150,
+                background: "#364d79",
+                borderRadius: borderRadiusLG,
+                padding: "20px",
+                textAlign: "center",
+                color: "#fff",
+              }}
+            >
               <h3>Total Akurasi</h3>
-            </div>
-            <div style={{ color: "#fff", margin: "50px 0 0 30px" }}>
               <h3>80%</h3>
             </div>
-          </div>
-        </Flex>
+          </Col>
+        </Row>
       </div>
       <Foter />
     </Layout>
   );
 };
+
 export default Dashboard;

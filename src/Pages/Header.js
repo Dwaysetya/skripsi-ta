@@ -1,6 +1,7 @@
 import { LogoutOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 // import { Color } from "antd/es/color-picker";
 const { Header } = Layout;
 
@@ -56,13 +57,7 @@ function IndexHeaders(props) {
             {
               key: "50",
               icon: <LogoutOutlined />,
-              label: "Log-Out",
-              children: [
-                {
-                  key: "51",
-                  label: "Log-Out",
-                },
-              ],
+              label: <Link to="/signin">Log-Out</Link>,
             },
           ]}
         />

@@ -75,12 +75,6 @@ function Labeling() {
   ];
   return (
     <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
-      <ImportData
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        url={`${BASE_URL}/stopword/import`}
-      />
       <Label
         htmlFor="Labelling"
         text="Labelling"
