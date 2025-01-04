@@ -200,7 +200,7 @@ function Stopword() {
       {modalContent === "TambahData" && (
         <TambahData open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
           {" "}
-          <Form.Item name="createdat" label="Created At">
+          <Form.Item name="kata stop" label="Kata Stop">
             <Input
               type="text"
               value={Stopword}

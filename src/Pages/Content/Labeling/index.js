@@ -1,11 +1,11 @@
-import { Input, Layout, Table, theme } from "antd";
+import { Button, Input, Layout, Skeleton, Table, theme } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import IndexButton from "../../../Components/Elements/Button";
 import Label from "../../../Components/Elements/Label";
 import ImportData from "../../../Components/Fragments/ImportData";
 import Foter from "../../Footer";
 import { BASE_URL } from "../../../utils/constants";
+import IndexButton from "../../../Components/Elements/Button";
 const { Content } = Layout;
 const { Search } = Input;
 
@@ -15,6 +15,7 @@ function Labeling() {
   } = theme.useToken();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [Dummy, setDummy] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -26,32 +27,32 @@ function Labeling() {
     setIsModalOpen(false);
   };
 
-  const GetdataUsers = () => {
+  const handleStartLabelling = () => {
+    setIsLoading(true);
     axios
-      .get(`${BASE_URL}/labelling`)
+      .get(`${BASE_URL}/dataset/labelled`)
       .then((res) => {
         console.log("Data dari datset:", res); // Tampilkan data
         setDummy(res.data);
       })
       .catch((err) => {
         console.log("Error fetching data:", err);
+      })
+      .finally(() => {
+        setIsLoading(false); // Akhiri loading
       });
   };
 
   console.log("dway", Dummy);
 
-  useEffect(() => {
-    GetdataUsers();
-  }, []);
-
   const handleSearch = (value) => {
     // If no search value, reset the data to the full list by calling GetdataUsers
     if (value.trim() === "") {
       console.log("Resetting to full data...");
-      GetdataUsers(); // Reset to the original full dataset
+      Dummy(); // Reset to the original full dataset
     } else {
       // If there is a search value, filter the data
-      const filteredData = GetdataUsers.filter(
+      const filteredData = Dummy.filter(
         (item) =>
           item.created_at.toLowerCase().includes(value.toLowerCase()) ||
           item.raw_data.toLowerCase().includes(value.toLowerCase()) ||
@@ -70,7 +71,6 @@ function Labeling() {
     { title: "Created At", dataIndex: "created_at", key: "created_at" },
     { title: "User Name", dataIndex: "username", key: "username" },
     { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
-    { title: "Score", dataIndex: "score", key: "score" },
     { title: "Label", dataIndex: "label", key: "label" },
   ];
   return (
@@ -82,8 +82,8 @@ function Labeling() {
         url={`${BASE_URL}/stopword/import`}
       />
       <Label
-        htmlFor="Dataset"
-        text="Dataset"
+        htmlFor="Labelling"
+        text="Labelling"
         style={{
           fontWeight: "bold",
           color: "black",
@@ -124,9 +124,9 @@ function Labeling() {
             gap: "10px",
           }}
         >
-          <IndexButton type="primary" onClick={() => setIsModalOpen(true)}>
-            Import Data
-          </IndexButton>
+          <Button type="primary" onClick={() => handleStartLabelling()}>
+            Start Labelling
+          </Button>
         </div>
       </div>
       <Content
@@ -138,16 +138,20 @@ function Labeling() {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table
-          columns={columns}
-          dataSource={[Dummy]}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            onChange: (page, pageSize) =>
-              setPagination({ current: page, pageSize }),
-          }}
-        />
+        {isLoading ? (
+          <Skeleton active />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={Dummy}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              onChange: (page, pageSize) =>
+                setPagination({ current: page, pageSize }),
+            }}
+          />
+        )}
       </Content>
       <Foter />
     </Layout>

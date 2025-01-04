@@ -28,7 +28,7 @@ function Tokenizing({ data }) {
       title: "Ulasan Sesudah",
       dataIndex: "tokenizing_data",
       key: "tokenizing_data",
-      render: (tokenizingData) => tokenizingData.join(" "),
+      render: (tokenizingData) => tokenizingData.join(", "),
     },
   ];
 

@@ -4,7 +4,6 @@ import {
   DoubleRightOutlined,
   HomeOutlined,
   LoadingOutlined,
-  LogoutOutlined,
   ReadOutlined,
   TagOutlined,
 } from "@ant-design/icons";
@@ -81,9 +80,6 @@ const SidebarComponent = () => {
         </Menu.Item>
         <Menu.Item key="6" icon={<CheckSquareOutlined />}>
           <Link to="/Testing">Testing</Link>
-        </Menu.Item>
-        <Menu.Item key="7" icon={<LogoutOutlined />} onClick={handleLogout}>
-          Log-Out
         </Menu.Item>
       </Menu>
     </Sider>

@@ -23,12 +23,9 @@ const Preprocessing = () => {
   const [Preprocessing, setPreprocessing] = useState("");
   const [kontenAktif, setKontenAktif] = useState("A");
   const [showOtherButtons, setShowOtherButtons] = useState(false); // State untuk kontrol visibilitas tombol lainnya
+  const [hidePreprocessingButton, setHidePreprocessingButton] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-  });
-  console.log("dddd", Preprocessing);
+  const [isClicked, setIsClicked] = useState(false);
 
   const kontenMapping = {
     A: <PreprocessingData />,
@@ -43,6 +40,10 @@ const Preprocessing = () => {
   const handlePreprocessingClick = () => {
     setKontenAktif("B");
     setShowOtherButtons(true); // Menampilkan tombol lainnya
+    setHidePreprocessingButton(true);
+  };
+  const handleClick = () => {
+    setIsClicked(!isClicked); // Toggle state
   };
 
   const handlePreprocessingData = () => {
@@ -98,19 +99,21 @@ const Preprocessing = () => {
         }}
       />
       <div style={{ width: "100%", padding: "10px 15px" }}>
-        <Row gutter={[10, 10]}>
+        <Row gutter={[16]}>
           {/* Tombol Preprocessing */}
-          <Col span={3}>
-            <IndexButton
-              type="primary"
-              onClick={() => {
-                handlePreprocessingClick();
-                handlePreprocessingData();
-              }}
-            >
-              Preprocessing
-            </IndexButton>
-          </Col>
+          {!hidePreprocessingButton && ( // Kondisi untuk menyembunyikan tombol
+            <Col span={3}>
+              <IndexButton
+                type="primary"
+                onClick={() => {
+                  handlePreprocessingClick();
+                  handlePreprocessingData();
+                }}
+              >
+                Preprocessing
+              </IndexButton>
+            </Col>
+          )}
           {/* Tombol lainnya (tersembunyi hingga tombol Preprocessing diklik) */}
           {showOtherButtons &&
             [
@@ -121,10 +124,13 @@ const Preprocessing = () => {
               { key: "F", label: "Steaming" },
               { key: "G", label: "Tokenizing" },
             ].map((btn) => (
-              <Col key={btn.key} span={3}>
+              <Col key={btn.key} span={4}>
                 <IndexButton
                   type="primary"
-                  onClick={() => setKontenAktif(btn.key)}
+                  onClick={() => {
+                    setKontenAktif(btn.key);
+                    handleClick();
+                  }}
                 >
                   {btn.label}
                 </IndexButton>

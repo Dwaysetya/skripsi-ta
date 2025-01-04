@@ -2,7 +2,7 @@ import { Button } from "antd";
 import React from "react";
 
 function IndexButton(props) {
-  const { type, children, onClick, margin = "0px" } = props; // Gunakan children, bukan Children dan label
+  const { type, children, onClick, margin = "0px" } = props;
   return (
     <Button
       type={type}

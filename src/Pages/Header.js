@@ -1,4 +1,4 @@
-import { UserOutlined } from "@ant-design/icons";
+import { LogoutOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import React from "react";
 // import { Color } from "antd/es/color-picker";
@@ -55,13 +55,9 @@ function IndexHeaders(props) {
           items={[
             {
               key: "50",
-              icon: <UserOutlined />,
-              label: "User",
+              icon: <LogoutOutlined />,
+              label: "Log-Out",
               children: [
-                {
-                  key: "51",
-                  label: "User",
-                },
                 {
                   key: "51",
                   label: "Log-Out",

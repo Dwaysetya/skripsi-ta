@@ -7,6 +7,7 @@ import Slangword from "../../Pages/Content/KamusKata/Slangword";
 import Stopword from "../../Pages/Content/KamusKata/Stopword";
 import Labeling from "../../Pages/Content/Labeling";
 import Preprocessing from "../../Pages/Content/Preprocessing/Preprocessing";
+import Testing from "../../Pages/Content/Testing";
 
 const Content = () => {
   return (
@@ -23,6 +24,7 @@ const Content = () => {
         <Route path="/dataset" element={<Dataset />} />
         <Route path="/preprocessing" element={<Preprocessing />} />
         <Route path="/labeling" element={<Labeling />} />
+        <Route path="/testing" element={<Testing />} />
       </Routes>
     </div>
   );
