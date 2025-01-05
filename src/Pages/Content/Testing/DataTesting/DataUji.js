@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Label from "../../../../Components/Elements/Label";
 const { Content } = Layout;
 
-function DataUji() {
+function DataUji(data) {
+  console.log("dway", data);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -28,8 +29,8 @@ function DataUji() {
     },
     {
       title: "Label(prediksi)",
-      dataIndex: "predicted_labe",
-      key: "predicted_labe",
+      dataIndex: "predicted_label",
+      key: "predicted_label",
     },
   ];
 
@@ -53,7 +54,7 @@ function DataUji() {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={Dummy} />
+        <Table columns={columns} dataSource={data.data.testing_data} />
       </Content>
     </div>
   );

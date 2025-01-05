@@ -34,9 +34,10 @@ const Testing = () => {
   const [kontenAktif, setKontenAktif] = useState("A");
   const [hideTestingButton, setHideTestingButton] = useState(false);
   const [showOtherButtons, setShowOtherButtons] = useState(false);
-  const [radioValue, setRadioValue] = useState(1);
+  const [radioValue, setRadioValue] = useState("");
   const [nilaiK, setNilaiK] = useState("");
   const [nilaiRatio, setNilaiRatio] = useState("9:1");
+  const [dataKnn, setDataKnn] = useState([]);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -44,6 +45,8 @@ const Testing = () => {
 
   const handleModalOpen = (content) => {
     setModalContent(content);
+    setNilaiRatio(content.ratio);
+    setNilaiK(content.k);
     setIsModalOpen(true);
   };
 
@@ -57,9 +60,9 @@ const Testing = () => {
   const renderView = () => {
     switch (kontenAktif) {
       case "B":
-        return <DataUji />;
+        return <DataUji data={dataKnn} />;
       case "C":
-        return <DataLatih />;
+        return <DataLatih data={dataKnn} />;
       default:
         return <NotFoundPage />;
     }
@@ -76,11 +79,11 @@ const Testing = () => {
 
     // Map nilai radio ke rasio yang sesuai
     const ratioMap = {
-      1: "9.1",
-      2: "8.2",
-      3: "7.3",
-      4: "6.4",
-      5: "5.5",
+      1: 9.1,
+      2: 8.2,
+      3: 7.3,
+      4: 6.4,
+      5: 5.5,
     };
 
     setNilaiRatio(ratioMap[selectedValue] || "9:1");
@@ -92,19 +95,31 @@ const Testing = () => {
       return;
     }
     try {
+      console.log("Data yang akan dikirim:", {
+        ratio: nilaiRatio,
+        k: parseInt(nilaiK, 10),
+      });
+
       const response = await axios.post(`${BASE_URL}/testing`, {
         ratio: nilaiRatio,
         k: parseInt(nilaiK, 10), // Pastikan nilai K adalah angka
       });
-      console.log("Data Berhasil Dikirim", response.data);
-      message.success("Rasio dan K Berhasil Diinput!");
-      setIsModalOpen(false);
-      handleTestingClick();
+
+      if (response.status === 200) {
+        setDataKnn(response.data);
+        console.log("Data Berhasil Dikirim", response.data);
+        message.success("Rasio dan K Berhasil Diinput!");
+        setIsModalOpen(false);
+        handleTestingClick();
+      } else {
+        throw new Error("Error");
+      }
     } catch (error) {
       console.log("Terjadi Kesalahan Saat Mengirim Data:", error);
       message.error("Gagal Mengirim Rasio dan Nilai K");
     }
   };
+  console.log("data", dataKnn);
 
   // Styles
   const styles = {
@@ -208,30 +223,22 @@ const Testing = () => {
         }}
       >
         <Divider> Tabel Confusion Matrix</Divider>
-        <Table>
-          <Column title="Data Akurasi" dataIndex="akurasi" key="akurasi" />
+        <Table dataSource={dataKnn.confusion_matrix}>
+          <Column title="Data Aktual" dataIndex="accuracy" key="accuracy" />
           <ColumnGroup title="Data Prediksi">
-            <Column
-              title="Positif"
-              dataIndex="positive_count"
-              key="positive_count"
-            />
-            <Column
-              title="Negatif"
-              dataIndex="negative_count"
-              key="negative_count"
-            />
+            <Column title="Positif" dataIndex="1" key="1" />
+            <Column title="Negatif" dataIndex="0" key="0" />
           </ColumnGroup>
           <Column title="Total" dataIndex="f1_score" key="f1_score" />
         </Table>
         <Divider> Detail Perhitungan Evaluasi</Divider>
-        <Table>
+        <Table dataSource={[dataKnn]}>
           <Column title="Akurasi" dataIndex="accuracy" key="accuracy" />
           <Column title="Presisi" dataIndex="precision" key="precision" />
           <Column title="Recall" dataIndex="recall" key="recall" />
         </Table>
         <Divider> Detail Perhitungan Evaluasi</Divider>
-        <Table>
+        <Table dataSource={[dataKnn]}>
           <Column title="Akurasi" dataIndex="accuracy" key="accuracy" />
           <Column title="Presisi" dataIndex="precision" key="precision" />
           <Column title="Recall" dataIndex="recall" key="recall" />

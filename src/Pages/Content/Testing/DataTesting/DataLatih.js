@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Label from "../../../../Components/Elements/Label";
 const { Content } = Layout;
 
-function DataLatih() {
+function DataLatih(data) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -20,7 +20,7 @@ function DataLatih() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Ulasan Sebelumnya", dataIndex: "raw_data", key: "raw_data" },
+    { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
     {
       title: "label",
       dataIndex: "label",
@@ -48,7 +48,7 @@ function DataLatih() {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={Dummy} />
+        <Table columns={columns} dataSource={data.data.training_data} />
       </Content>
     </div>
   );
