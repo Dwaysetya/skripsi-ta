@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Layout, Table, theme, Input, Form, message, Modal } from "antd";
+import { Layout, Table, theme, Input, message } from "antd";
 import Label from "../../../Components/Elements/Label";
 import IndexButton from "../../../Components/Elements/Button";
 import axios from "axios";
 import ImportData from "../../../Components/Fragments/ImportData";
-import Foter from "../../Footer";
+import Footer from "../../Footer";
 import { BASE_URL } from "../../../utils/constants";
+
 const { Content } = Layout;
 const { Search } = Input;
 
@@ -13,55 +14,49 @@ function Dataset() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [Dummy, setDummy] = useState("");
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-  });
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+  const [Dummy, setDummy] = useState([]);
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
+
+  // Function untuk fetch data
+  const GetdataUsers = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/dataset`);
+      console.log("Data dari dataset:", res.data);
+
+      const dataUpdate = res.data.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
+      setDummy(dataUpdate);
+    } catch (err) {
+      console.log("Error fetching data:", err);
+      message.error("Gagal mengambil data dataset.");
+    }
   };
 
-  const GetdataUsers = () => {
-    axios
-      .get(`${BASE_URL}/dataset`)
-      .then((res) => {
-        console.log("Data dari datset:", res.data); // Tampilkan data
-        const dataUpdate = res.data.sort((a, b) => {
-          return new Date(a.date) - new Date(b.date);
-        });
-        console.log("Data yang diurutkan:", dataUpdate);
-        setDummy(dataUpdate);
-      })
-      .catch((err) => {
-        console.log("Error fetching data:", err);
-      });
-  };
-
+  // Jalankan hanya sekali saat komponen di-mount
   useEffect(() => {
     GetdataUsers();
-  }, []);
+  }, []); // Dependency array kosong: hanya jalan sekali saat mount
 
   const handleSearch = (value) => {
-    // If no search value, reset the data to the full list by calling GetdataUsers
     if (value.trim() === "") {
-      console.log("Resetting to full data...");
-      GetdataUsers(); // Reset to the original full dataset
+      GetdataUsers(); // Reset ke data awal
     } else {
-      // If there is a search value, filter the data
       const filteredData = Dummy.filter(
         (item) =>
-          item.created_at.toLowerCase().includes(value.toLowerCase()) ||
-          item.raw_data.toLowerCase().includes(value.toLowerCase()) ||
-          item.username.toLowerCase().includes(value.toLowerCase())
+          (item.created_at &&
+            item.created_at.toLowerCase().includes(value.toLowerCase())) ||
+          (item.raw_data &&
+            item.raw_data.toLowerCase().includes(value.toLowerCase())) ||
+          (item.username &&
+            item.username.toLowerCase().includes(value.toLowerCase()))
       );
       setDummy(filteredData);
     }
   };
+
   const columns = [
     {
       title: "No",
@@ -73,12 +68,13 @@ function Dataset() {
     { title: "User Name", dataIndex: "username", key: "username" },
     { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
   ];
+
   return (
     <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
       <ImportData
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
         url={`${BASE_URL}/dataset`}
       />
       <Label
@@ -101,33 +97,15 @@ function Dataset() {
           padding: "10px 15px",
         }}
       >
-        <div
-          style={{
-            flexGrow: 1,
-            display: "flex",
-            justifyContent: "flex-start",
-            marginRight: "40%",
-          }}
-        >
-          <Search
-            style={{ width: "300px" }}
-            placeholder="Search by Dataset"
-            onSearch={handleSearch}
-            enterButton
-          />
-        </div>
-        <div
-          style={{
-            flexGrow: 0,
-            display: "flex",
-            justifyContent: "flex-end",
-            gap: "10px",
-          }}
-        >
-          <IndexButton type="primary" onClick={() => setIsModalOpen(true)}>
-            Import Data
-          </IndexButton>
-        </div>
+        <Search
+          style={{ width: "300px" }}
+          placeholder="Search by Dataset"
+          onSearch={handleSearch}
+          enterButton
+        />
+        <IndexButton type="primary" onClick={() => setIsModalOpen(true)}>
+          Import Data
+        </IndexButton>
       </div>
       <Content
         style={{
@@ -141,6 +119,7 @@ function Dataset() {
         <Table
           columns={columns}
           dataSource={Dummy}
+          rowKey={(record) => record.id || record.key}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
@@ -149,7 +128,7 @@ function Dataset() {
           }}
         />
       </Content>
-      <Foter />
+      <Footer />
     </Layout>
   );
 }

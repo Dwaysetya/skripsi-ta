@@ -25,6 +25,7 @@ import Column from "antd/es/table/Column";
 import ColumnGroup from "antd/es/table/ColumnGroup";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
+import { Percent } from "antd/es/progress/style";
 
 const { Content } = Layout;
 
@@ -119,7 +120,18 @@ const Testing = () => {
       message.error("Gagal Mengirim Rasio dan Nilai K");
     }
   };
-  console.log("data", dataKnn);
+  const Datadecimal = () => {
+    const decimalAccuracy = (dataKnn.accuracy * 100).toFixed(2) + "%";
+    const decimalPrecision = (dataKnn.precision * 100).toFixed(2) + "%";
+    const decimalRecall = (dataKnn.recall * 100).toFixed(2) + "%";
+
+    return {
+      decimalAccuracy,
+      decimalPrecision,
+      decimalRecall,
+    };
+  };
+  const { decimalAccuracy, decimalPrecision, decimalRecall } = Datadecimal();
 
   // Styles
   const styles = {
@@ -232,23 +244,31 @@ const Testing = () => {
           <Column title="Total" dataIndex="f1_score" key="f1_score" />
         </Table>
         <Divider> Detail Perhitungan Evaluasi</Divider>
-        <Table dataSource={[dataKnn]}>
-          <Column title="Akurasi" dataIndex="accuracy" key="accuracy" />
-          <Column title="Presisi" dataIndex="precision" key="precision" />
-          <Column title="Recall" dataIndex="recall" key="recall" />
-        </Table>
-        <Divider> Detail Perhitungan Evaluasi</Divider>
-        <Table dataSource={[dataKnn]}>
-          <Column title="Akurasi" dataIndex="accuracy" key="accuracy" />
-          <Column title="Presisi" dataIndex="precision" key="precision" />
-          <Column title="Recall" dataIndex="recall" key="recall" />
+        <Table
+          dataSource={[{ decimalAccuracy, decimalPrecision, decimalRecall }]}
+        >
+          <Column
+            title="Akurasi"
+            dataIndex="decimalAccuracy"
+            key="decimalAccuracy"
+          />
+          <Column
+            title="Presisi"
+            dataIndex="decimalPrecision"
+            key="decimalPrecision"
+          />
+          <Column
+            title="Recall"
+            dataIndex="decimalRecall"
+            key="decimalRecall"
+          />
         </Table>
         <Row gutter={16}>
           <Col span={12}>
             <Card bordered={false}>
               <Statistic
                 title="Positive"
-                value={11.28}
+                value={dataKnn.positive_count}
                 precision={2}
                 valueStyle={{
                   color: "#3f8600",
@@ -261,7 +281,7 @@ const Testing = () => {
             <Card bordered={false}>
               <Statistic
                 title="Negative"
-                value={9.3}
+                value={dataKnn.negative_count}
                 precision={2}
                 valueStyle={{
                   color: "#cf1322",

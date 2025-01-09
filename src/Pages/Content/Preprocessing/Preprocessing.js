@@ -1,4 +1,4 @@
-import { Col, Layout, Row, Skeleton, theme } from "antd";
+import { Col, Layout, Row, Skeleton, theme, Progress } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import IndexButton from "../../../Components/Elements/Button";
@@ -19,10 +19,13 @@ const Preprocessing = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  // State management
   const [Dummy, setDummy] = useState("");
   const [Preprocessing, setPreprocessing] = useState("");
+  const [isPreprocessingFetched, setIsPreprocessingFetched] = useState(false); // Cek apakah data preprocessing sudah dimuat
   const [kontenAktif, setKontenAktif] = useState("A");
-  const [showOtherButtons, setShowOtherButtons] = useState(false); // State untuk kontrol visibilitas tombol lainnya
+  const [showOtherButtons, setShowOtherButtons] = useState(false); // Kontrol visibilitas tombol lainnya
   const [hidePreprocessingButton, setHidePreprocessingButton] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -41,9 +44,11 @@ const Preprocessing = () => {
     setKontenAktif("B");
     setShowOtherButtons(true); // Menampilkan tombol lainnya
     setHidePreprocessingButton(true);
-  };
-  const handleClick = () => {
-    setIsClicked(!isClicked); // Toggle state
+
+    // Ambil data hanya jika belum pernah dimuat
+    if (!isPreprocessingFetched) {
+      handlePreprocessingData();
+    }
   };
 
   const handlePreprocessingData = () => {
@@ -51,12 +56,13 @@ const Preprocessing = () => {
     axios
       .get(`${BASE_URL}/preprocessing`)
       .then((res) => {
-        console.log("Data dari datset:", res.data); // Tampilkan data
+        console.log("Data dari preprocessing:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) => {
           return new Date(a.date) - new Date(b.date);
         });
         console.log("Data yang diurutkan:", dataUpdate);
         setPreprocessing(dataUpdate);
+        setIsPreprocessingFetched(true); // Tandai bahwa data sudah diambil
       })
       .catch((err) => {
         console.log("Error fetching data:", err);
@@ -70,7 +76,7 @@ const Preprocessing = () => {
     axios
       .get(`${BASE_URL}/dataset`)
       .then((res) => {
-        console.log("Data dari datset:", res.data); // Tampilkan data
+        console.log("Data dari dataset:", res.data); // Tampilkan data
         const dataUpdate = res.data.sort((a, b) => {
           return new Date(a.date) - new Date(b.date);
         });
@@ -105,10 +111,7 @@ const Preprocessing = () => {
             <Col span={3}>
               <IndexButton
                 type="primary"
-                onClick={() => {
-                  handlePreprocessingClick();
-                  handlePreprocessingData();
-                }}
+                onClick={handlePreprocessingClick} // Klik tombol menjalankan preprocessing
               >
                 Preprocessing
               </IndexButton>
@@ -129,7 +132,7 @@ const Preprocessing = () => {
                   type="primary"
                   onClick={() => {
                     setKontenAktif(btn.key);
-                    handleClick();
+                    setIsClicked(true);
                   }}
                 >
                   {btn.label}
@@ -148,7 +151,13 @@ const Preprocessing = () => {
         }}
       >
         {isLoading ? (
-          <Skeleton active /> // Tampilan saat loading
+          <>
+            <Skeleton active />
+            <Progress
+              percent={(Preprocessing && Preprocessing.progress) || 0}
+              status="active"
+            />
+          </>
         ) : (
           kontenMapping[kontenAktif] || <div>Masukkan data</div>
         )}
