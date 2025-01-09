@@ -30,6 +30,22 @@ function Labeling() {
   const handleStartLabelling = () => {
     setIsLoading(true);
     axios
+      .get(`${BASE_URL}/labelling`)
+      .then((res) => {
+        console.log("Data labelling", res); // Tampilkan data
+        // setDummy(res.data);
+      })
+      .catch((err) => {
+        console.log("Error fetching data:", err);
+      })
+      .finally(() => {
+        setIsLoading(false); // Akhiri loading
+      });
+  };
+
+  const handleGetLabelData = () => {
+    setIsLoading(true);
+    axios
       .get(`${BASE_URL}/dataset/labelled`)
       .then((res) => {
         console.log("Data dari datset:", res); // Tampilkan data
@@ -120,6 +136,9 @@ function Labeling() {
         >
           <Button type="primary" onClick={() => handleStartLabelling()}>
             Start Labelling
+          </Button>
+          <Button type="primary" onClick={() => handleGetLabelData()}>
+            Get Data Lebel
           </Button>
         </div>
       </div>
