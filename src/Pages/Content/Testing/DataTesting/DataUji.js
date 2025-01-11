@@ -54,7 +54,16 @@ function DataUji(data) {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={data.data.testing_data} />
+        <Table
+          columns={columns}
+          dataSource={data.data.testing_data}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            onChange: (page, pageSize) =>
+              setPagination({ current: page, pageSize }),
+          }}
+        />
       </Content>
     </div>
   );

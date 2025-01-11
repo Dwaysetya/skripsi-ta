@@ -48,7 +48,16 @@ function DataLatih(data) {
           borderRadius: borderRadiusLG,
         }}
       >
-        <Table columns={columns} dataSource={data.data.training_data} />
+        <Table
+          columns={columns}
+          dataSource={data.data.training_data}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            onChange: (page, pageSize) =>
+              setPagination({ current: page, pageSize }),
+          }}
+        />
       </Content>
     </div>
   );

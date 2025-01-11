@@ -32,7 +32,7 @@ const { Content } = Layout;
 const Testing = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("UjiData");
-  const [kontenAktif, setKontenAktif] = useState("A");
+  const [kontenAktif, setKontenAktif] = useState("B");
   const [hideTestingButton, setHideTestingButton] = useState(false);
   const [showOtherButtons, setShowOtherButtons] = useState(false);
   const [radioValue, setRadioValue] = useState("");
@@ -80,11 +80,11 @@ const Testing = () => {
 
     // Map nilai radio ke rasio yang sesuai
     const ratioMap = {
-      1: 9.1,
-      2: 8.2,
-      3: 7.3,
-      4: 6.4,
-      5: 5.5,
+      1: 0.9,
+      2: 0.8,
+      3: 0.7,
+      4: 0.6,
+      5: 0.5,
     };
 
     setNilaiRatio(ratioMap[selectedValue] || "9:1");
@@ -124,14 +124,33 @@ const Testing = () => {
     const decimalAccuracy = (dataKnn.accuracy * 100).toFixed(2) + "%";
     const decimalPrecision = (dataKnn.precision * 100).toFixed(2) + "%";
     const decimalRecall = (dataKnn.recall * 100).toFixed(2) + "%";
+    const decimalPercentPositive = (
+      dataKnn?.positive_count && dataKnn?.testing_data?.length
+        ? (dataKnn.positive_count / dataKnn.testing_data.length) * 100
+        : 0
+    ).toFixed(2);
+
+    const decimalPercentNegative = (
+      dataKnn?.negative_count && dataKnn?.testing_data?.length
+        ? (dataKnn.negative_count / dataKnn.testing_data.length) * 100
+        : 0
+    ).toFixed(2);
 
     return {
       decimalAccuracy,
       decimalPrecision,
       decimalRecall,
+      decimalPercentPositive,
+      decimalPercentNegative,
     };
   };
-  const { decimalAccuracy, decimalPrecision, decimalRecall } = Datadecimal();
+  const {
+    decimalAccuracy,
+    decimalPrecision,
+    decimalRecall,
+    decimalPercentPositive,
+    decimalPercentNegative,
+  } = Datadecimal();
 
   // Styles
   const styles = {
@@ -156,6 +175,29 @@ const Testing = () => {
       margin: "5px 0 24px 16px",
     },
   };
+  const dataSource = [
+    {
+      key: "1",
+      dataAktual: "Positif",
+      prediksiPositif: 111,
+      prediksiNegatif: 121,
+      total: 232,
+    },
+    {
+      key: "2",
+      dataAktual: "Negatif",
+      prediksiPositif: 45,
+      prediksiNegatif: 414,
+      total: 459,
+    },
+    {
+      key: "3",
+      dataAktual: "Total",
+      prediksiPositif: 156,
+      prediksiNegatif: 535,
+      total: 691,
+    },
+  ];
 
   return (
     <Layout style={styles.layout}>
@@ -188,12 +230,27 @@ const Testing = () => {
         <Form.Item
           name="nilai"
           label="Nilai K"
-          rules={[{ required: true, message: "Please input your nilai K!" }]}
+          rules={[
+            { required: true, message: "Masukkan nilai K!" },
+            {
+              pattern: /^[1-9]\d*$/, // Hanya angka positif
+              message: "Nilai K harus berupa angka positif!",
+            },
+          ]}
         >
           <Input
             value={nilaiK}
-            onChange={(e) => setNilaiK(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (!isNaN(value) && Number.isInteger(+value)) {
+                setNilaiK(value);
+              } else {
+                message.error("Nilai K harus berupa angka bulat!");
+                setNilaiK("");
+              }
+            }}
             placeholder="Masukkan Nilai K"
+            type="number"
           />
         </Form.Item>
       </ModalTesting>
@@ -235,13 +292,35 @@ const Testing = () => {
         }}
       >
         <Divider> Tabel Confusion Matrix</Divider>
-        <Table dataSource={dataKnn.confusion_matrix}>
-          <Column title="Data Aktual" dataIndex="accuracy" key="accuracy" />
-          <ColumnGroup title="Data Prediksi">
-            <Column title="Positif" dataIndex="1" key="1" />
-            <Column title="Negatif" dataIndex="0" key="0" />
-          </ColumnGroup>
-          <Column title="Total" dataIndex="f1_score" key="f1_score" />
+        <Table
+          dataSource={dataSource}
+          pagination={false} // Nonaktifkan pagination
+          bordered // Tambahkan border pada tabel
+          style={{
+            backgroundColor: "yellow",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          <Table.Column
+            title="Data Aktual"
+            dataIndex="dataAktual"
+            key="dataAktual"
+            render={(text) => <b>{text}</b>}
+          />
+          <Table.ColumnGroup title="Data Prediksi">
+            <Table.Column
+              title="Positif"
+              dataIndex="prediksiPositif"
+              key="prediksiPositif"
+            />
+            <Table.Column
+              title="Negatif"
+              dataIndex="prediksiNegatif"
+              key="prediksiNegatif"
+            />
+          </Table.ColumnGroup>
+          <Table.Column title="Total" dataIndex="total" key="total" />
         </Table>
         <Divider> Detail Perhitungan Evaluasi</Divider>
         <Table
@@ -268,7 +347,7 @@ const Testing = () => {
             <Card bordered={false}>
               <Statistic
                 title="Positive"
-                value={dataKnn.positive_count}
+                value={decimalPercentPositive}
                 precision={2}
                 valueStyle={{
                   color: "#3f8600",
@@ -281,7 +360,7 @@ const Testing = () => {
             <Card bordered={false}>
               <Statistic
                 title="Negative"
-                value={dataKnn.negative_count}
+                value={decimalPercentNegative}
                 precision={2}
                 valueStyle={{
                   color: "#cf1322",

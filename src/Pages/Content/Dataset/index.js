@@ -19,14 +19,14 @@ function Dataset() {
   const [Dummy, setDummy] = useState([]);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
 
-  // Function untuk fetch data
+  // Function to fetch data
   const GetdataUsers = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/dataset`);
       console.log("Data dari dataset:", res.data);
 
       const dataUpdate = res.data.sort(
-        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
       );
       setDummy(dataUpdate);
     } catch (err) {
@@ -35,14 +35,14 @@ function Dataset() {
     }
   };
 
-  // Jalankan hanya sekali saat komponen di-mount
+  // Run only once when the component is mounted
   useEffect(() => {
     GetdataUsers();
-  }, []); // Dependency array kosong: hanya jalan sekali saat mount
+  }, []); // Empty dependency array: runs only once on mount
 
   const handleSearch = (value) => {
     if (value.trim() === "") {
-      GetdataUsers(); // Reset ke data awal
+      GetdataUsers(); // Reset to the initial data
     } else {
       const filteredData = Dummy.filter(
         (item) =>
@@ -57,6 +57,16 @@ function Dataset() {
     }
   };
 
+  // Function to format the date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   const columns = [
     {
       title: "No",
@@ -64,7 +74,12 @@ function Dataset() {
       render: (text, record, index) =>
         (pagination.current - 1) * pagination.pageSize + index + 1,
     },
-    { title: "Created At", dataIndex: "created_at", key: "created_at" },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (text) => formatDate(text), // Format the date here
+    },
     { title: "User Name", dataIndex: "username", key: "username" },
     { title: "Ulasan", dataIndex: "raw_data", key: "raw_data" },
   ];
@@ -73,7 +88,10 @@ function Dataset() {
     <Layout style={{ marginLeft: "14%", marginTop: "5%" }}>
       <ImportData
         open={isModalOpen}
-        onOk={() => setIsModalOpen(false)}
+        onOk={() => {
+          setIsModalOpen(false);
+          GetdataUsers();
+        }}
         onCancel={() => setIsModalOpen(false)}
         url={`${BASE_URL}/dataset`}
       />
