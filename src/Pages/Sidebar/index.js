@@ -10,15 +10,11 @@ import {
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../images/saquL.png";
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 const SidebarComponent = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const imagePath = collapsed
-    ? "../../images/saquS.png"
-    : "../../src/images/saquL.png";
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -38,15 +34,14 @@ const SidebarComponent = () => {
       <header>
         <img
           alt="Logo"
-          src={imagePath}
+          src={Logo}
           style={{
             padding: "5px",
             justifyContent: "center",
             alignItems: "center",
-            width: "100%",
-            height: "100%",
+            width: "200px",
+            height: "80px",
           }}
-          onClick={() => setCollapsed(!collapsed)}
         />
       </header>
       <Menu

@@ -175,6 +175,7 @@ const Testing = () => {
       margin: "5px 0 24px 16px",
     },
   };
+
   const dataSource = [
     {
       key: "1",
@@ -186,8 +187,8 @@ const Testing = () => {
     {
       key: "2",
       dataAktual: "Negatif",
-      prediksiPositif: 45,
-      prediksiNegatif: 414,
+      prediksiPositif: dataKnn.confusion_matrix,
+      prediksiNegatif: dataKnn.confusion_matrix,
       total: 459,
     },
     {
