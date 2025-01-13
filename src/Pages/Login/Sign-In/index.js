@@ -18,6 +18,7 @@ const SignIn = () => {
       });
       console.log("dway", SignIn);
       navigate("/dashboard");
+      window.location.reload();
     } catch (error) {
       console.log("salah", error);
     }

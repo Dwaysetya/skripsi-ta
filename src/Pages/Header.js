@@ -1,6 +1,7 @@
 import { LogoutOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 // import { Color } from "antd/es/color-picker";
 const { Header } = Layout;
@@ -9,6 +10,16 @@ function IndexHeaders(props) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Menghapus data login dari localStorage
+    localStorage.removeItem("isLogin");
+
+    // Arahkan ke halaman login
+    navigate("/login");
+    window.location.reload();
+  };
 
   return (
     <Layout>
@@ -52,6 +63,9 @@ function IndexHeaders(props) {
             justifyContent: "flex-end", // Mengatur konten di dalam menu ke sebelah kanan
             width: 120,
             margin: "10px",
+          }}
+          onClick={() => {
+            handleLogout();
           }}
           items={[
             {
