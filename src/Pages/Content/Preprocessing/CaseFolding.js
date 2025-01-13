@@ -4,7 +4,6 @@ import Label from "../../../Components/Elements/Label";
 const { Content } = Layout;
 
 function CaseFolding({ data }) {
-  console.log("dway", data);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();

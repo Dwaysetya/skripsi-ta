@@ -57,7 +57,7 @@ function IndexHeaders(props) {
             {
               key: "50",
               icon: <LogoutOutlined />,
-              label: <Link to="/signin">Log-Out</Link>,
+              label: <Link to="/login">Log-Out</Link>,
             },
           ]}
         />

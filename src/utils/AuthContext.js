@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const login = (username, password) => {
     // Contoh logika login sederhana
     if (username === "admin" && password === "password") {
-      setIsAuthenticated(true);
+      setIsAuthenticated(false);
       navigate("/dashboard"); // Arahkan ke dashboard setelah login berhasil
     } else {
       alert("Login gagal! Periksa kembali username atau password.");

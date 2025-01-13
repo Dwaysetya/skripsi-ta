@@ -7,7 +7,7 @@ import { BASE_URL } from "../../../utils/constants";
 
 const { Content } = Layout;
 
-const Dashboard = () => {
+const Dashboard = ({ data }) => {
   const [datasetCount, setDatasetCount] = useState(0); // State untuk jumlah dataset
   const colorBgContainer = "#ffffff"; // Default warna background
   const borderRadiusLG = "8px";
@@ -27,8 +27,6 @@ const Dashboard = () => {
         setDatasetCount(0); // Pastikan ada fallback jika API gagal
       });
   }, []);
-
-  console.log("dway", datasetCount);
 
   const columns = [{ title: "Ulasan", dataIndex: "count", key: "count" }];
 
@@ -101,7 +99,10 @@ const Dashboard = () => {
               }}
             >
               <h3>Total Akurasi</h3>
-              <h3>80%</h3>
+              <Statistic
+                value={"86.83%"}
+                valueStyle={{ color: "#52c41a", fontSize: "20px" }}
+              />
             </div>
           </Col>
         </Row>

@@ -26,6 +26,7 @@ import ColumnGroup from "antd/es/table/ColumnGroup";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
 import { Percent } from "antd/es/progress/style";
+import Dashboard from "../Dashboard";
 
 const { Content } = Layout;
 
@@ -176,29 +177,39 @@ const Testing = () => {
     },
   };
 
-  const dataSource = [
-    {
-      key: "1",
-      dataAktual: "Positif",
-      prediksiPositif: 111,
-      prediksiNegatif: 121,
-      total: 232,
-    },
-    {
-      key: "2",
-      dataAktual: "Negatif",
-      prediksiPositif: dataKnn.confusion_matrix,
-      prediksiNegatif: dataKnn.confusion_matrix,
-      total: 459,
-    },
-    {
-      key: "3",
-      dataAktual: "Total",
-      prediksiPositif: 156,
-      prediksiNegatif: 535,
-      total: 691,
-    },
-  ];
+  const dataSource = dataKnn?.confusion_matrix?.length
+    ? [
+        {
+          key: "1",
+          dataAktual: "Positif",
+          prediksiPositif: dataKnn.confusion_matrix[0]?.[0] || 0,
+          prediksiNegatif: dataKnn.confusion_matrix[0]?.[1] || 0,
+          total:
+            (dataKnn.confusion_matrix[0]?.[0] || 0) +
+            (dataKnn.confusion_matrix[0]?.[1] || 0),
+        },
+        {
+          key: "2",
+          dataAktual: "Negatif",
+          prediksiPositif: dataKnn.confusion_matrix[1]?.[0] || 0,
+          prediksiNegatif: dataKnn.confusion_matrix[1]?.[1] || 0,
+          total:
+            (dataKnn.confusion_matrix[1]?.[0] || 0) +
+            (dataKnn.confusion_matrix[1]?.[1] || 0),
+        },
+        {
+          key: "3",
+          dataAktual: "Total",
+          prediksiPositif:
+            (dataKnn.confusion_matrix[0]?.[0] || 0) +
+            (dataKnn.confusion_matrix[0]?.[1] || 0),
+          prediksiNegatif:
+            (dataKnn.confusion_matrix[1]?.[0] || 0) +
+            (dataKnn.confusion_matrix[1]?.[1] || 0),
+          total: dataKnn.confusion_matrix.flat().reduce((a, b) => a + b, 0),
+        },
+      ]
+    : [];
 
   return (
     <Layout style={styles.layout}>
@@ -298,8 +309,6 @@ const Testing = () => {
           pagination={false} // Nonaktifkan pagination
           bordered // Tambahkan border pada tabel
           style={{
-            backgroundColor: "yellow",
-            fontWeight: "bold",
             textAlign: "center",
           }}
         >

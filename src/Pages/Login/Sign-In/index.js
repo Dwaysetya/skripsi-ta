@@ -7,35 +7,17 @@ import Label from "../../../Components/Elements/Label";
 import { BASE_URL } from "../../../utils/constants";
 
 const SignIn = () => {
-  //   const [userName, setUserName] = useState("");
-  //   const [isPassword, setIsPassword] = useState("");
   const navigate = useNavigate();
 
-  //   const isLogin = localStorage.getItem("isLogin");
-
-  //   useEffect(() => {
-  //     // Jika pengguna sudah login, arahkan ke halaman dashboard
-  //     if (isLogin === "true") {
-  //       navigate("/dashboard");
-  //     }
-  //   }, [isLogin, navigate]);
-
-  // Fungsi untuk menangani proses login
   const onFinish = async (values) => {
     localStorage.setItem("isLogin", "true");
-    // try {
-    //   console.log("dway", onFinish);
-    //   navigate("/kamuskata/slangword");
-    // } catch (error) {
-    //   console.log("salah", error);
-    // }
     try {
       const SignIn = await axios.post(`${BASE_URL}/user/signin`, {
         username: values.username,
         password: values.password,
       });
       console.log("dway", SignIn);
-      navigate("/kamuskata/slangword");
+      navigate("/dashboard");
     } catch (error) {
       console.log("salah", error);
     }
