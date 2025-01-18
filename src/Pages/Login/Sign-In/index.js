@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Flex, Form, Input } from "antd";
+import { Button, Checkbox, Flex, Form, Input, message } from "antd";
 import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,7 +20,8 @@ const SignIn = () => {
       navigate("/dashboard");
       window.location.reload();
     } catch (error) {
-      console.log("salah", error);
+      console.log("Password Salah", error);
+      message.error("Password Salah");
     }
   };
 
